@@ -1,0 +1,19 @@
+# Treetop grammar for gabc (input format of Gregorio).
+# Compiled by Treetop emits GabcParser class.
+
+grammar Gabc
+
+  rule score
+    # header # TODO
+    header_delimiter
+    body
+  end
+
+  rule header_delimiter
+    "%%\n"
+  end
+
+  rule body
+    .*
+  end
+end
