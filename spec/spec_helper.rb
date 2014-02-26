@@ -22,3 +22,12 @@ require 'treetop'
 require_relative 'matchers'
 
 Treetop.load File.expand_path('../lib/lygre/gabcgrammar', File.dirname(__FILE__))
+
+def load_example(fname)
+  File.read(
+            File.expand_path(
+                             File.join('examples', fname), 
+                             File.dirname(__FILE__)
+                            )
+           )
+end

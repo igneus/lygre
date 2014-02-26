@@ -4,14 +4,46 @@
 grammar Gabc
 
   rule score
-    # header # TODO
+    header
     header_delimiter
     body
+  end
+
+  # header ----------------------------
+
+  rule header
+    (empty_line / header_field)*
+  end
+
+  rule empty_line
+    inline_whitespace* "\n"
+  end
+
+  rule inline_whitespace
+    (" " / "\t")
+  end
+
+  rule header_field
+    field_id
+    ":" inline_whitespace*
+    field_value
+    inline_whitespace* ";"
+    inline_whitespace* "\n"
+  end
+
+  rule field_id
+    [\w]+
+  end
+
+  rule field_value
+    [^;]+
   end
 
   rule header_delimiter
     "%%\n"
   end
+
+  # body ------------------------------
 
   rule body
     .*

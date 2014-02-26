@@ -1,0 +1,28 @@
+% several header-fields
+
+% example copied from http://home.gna.org/gregorio/gabc/#introduction
+name: incipit;
+gabc-copyright: copyright on this gabc file;
+score-copyright: copyright on the source score;
+office-part: introitus/...;
+occasion: in church calendar;
+meter: for metrical hymns;
+commentary: source of words;
+arranger: name of arranger;
+gabc-version: 0.9.3;
+author: if known;
+date: xi c;
+manuscript: ms name;
+manuscript-reference: e.g. CAO reference;
+manuscript-storage-place: library/monastery;
+book: from which score taken;
+transcriber: writer of gabc;
+transcription-date: 2009;
+gregoriotex-font: greciliae;
+mode: 6;
+initial-style: 1;
+centering-scheme: english;
+user-notes: whatever other comments you wish to make;
+annotation: IN.;
+annotation: 6;
+%%
