@@ -27,8 +27,10 @@ input = rf.read
 result = parser.parse(input)
 if result then
   puts 'grely thinks this is a valid gabc file.'
+  exit 0
 else
   puts 'grely thinks the input is not valid gabc:'
   puts 
-  puts "'#{parser.failure_reason}' on line #{parser.failure_line} column #{parser.failure_column}"
+  STDERR.puts "'#{parser.failure_reason}' on line #{parser.failure_line} column #{parser.failure_column}"
+  exit 1
 end
