@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require_relative 'spec_helper'
 
 # the GabcParser is described through the file format
@@ -99,6 +101,24 @@ describe 'gabc' do
     describe 'music' do
       it 'some simple notes' do
         "%%\n(a) (h) (g) ".should compile
+      end
+
+      it 'all possible notes' do
+        "%%\n (a) (b) (c) (d) (e) (f) (g) (h) (i) (j) (k) (l) (m)"
+      end
+
+      it 'simple word with simple notes' do
+        "%%\n or(h)bis(h)".should compile
+      end
+
+      # TODO: non-ascii characters are often used in chant lyrics
+
+      describe 'one-note neumes without and with shape modifiers' do
+        it { "%%\n (g)".should compile }
+        it { "%%\n (G) (G~) (G>)".should compile } 
+        it { "%%\n (g~) (g<) (g>)".should compile }
+        it { "%%\n (go) (go~) (go<)".should compile }
+        it { "%%\n (gw) (gv) (gs) (gs<)".should compile }
       end
     end
 

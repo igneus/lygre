@@ -55,7 +55,8 @@ grammar Gabc
     any_whitespace?
     clef?
     any_whitespace?
-    ( music_word any_whitespace )*
+    ( music_word any_whitespace )* 
+    music_word?
   end
 
   rule clef
@@ -75,7 +76,11 @@ grammar Gabc
   end
 
   rule music_word
-    music
+    ( lyrics_syllable? music )+
+  end
+
+  rule lyrics_syllable
+    [a-zA-Z]+
   end
 
   rule music
@@ -83,6 +88,14 @@ grammar Gabc
   end
 
   rule notes
-    [a-m]
+    pitch shape_modifiers?
+  end
+
+  rule pitch
+    [a-mA-M]
+  end
+
+  rule shape_modifiers
+    [owvs]? [~<>]?
   end
 end
