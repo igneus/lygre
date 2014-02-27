@@ -25,6 +25,10 @@ grammar Gabc
     (" " / "\t")
   end
 
+  rule any_whitespace
+    (inline_whitespace / "\n")+
+  end
+
   rule header_field
     field_id
     ":" inline_whitespace*
@@ -48,6 +52,20 @@ grammar Gabc
   # body ------------------------------
 
   rule body
-    .*
+    any_whitespace*
+    clef*
+    any_whitespace*
+  end
+
+  rule clef
+    "(" clef_symbol line_number ")"
+  end
+
+  rule clef_symbol
+    "c" / "f"
+  end
+
+  rule line_number
+    [1-4]
   end
 end

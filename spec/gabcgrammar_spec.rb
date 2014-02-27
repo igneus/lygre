@@ -7,8 +7,7 @@ describe 'gabc' do
   describe 'valid gabc file must contain a header delimiter' do
 
     it 'file with just the header delimiter is valid' do
-      src = "%%\n"
-      src.should compile
+      "%%\n".should compile
     end
 
     it 'file without header delimiter is invalid' do
@@ -50,7 +49,7 @@ describe 'gabc' do
 
     describe 'comments' do
       it ', which may occupy a whole line' do
-        src = "% comment\n%%\n\n"
+        src = "% comment\n%%\n"
         src.should compile
       end
 
@@ -67,12 +66,29 @@ describe 'gabc' do
 
   end
 
-  describe 'body' do
+  describe 'body contains' do
+
+    describe 'whitespace' do
+      it '- any number of empty lines' do
+        "%%\n\n\n\n\n".should compile
+      end
+
+      it '- spaces and tabs' do
+        "%%\n    \n\t\n".should compile
+      end
+    end
 
     describe 'clef' do
-      it 'may be c clef on the 3rd line' do
-        src = "%%\n(c3)"
-        src.should compile
+      it 'c clef on the 3rd line' do
+        "%%\n(c3)".should compile
+      end
+
+      it 'c clef on the 1st line' do
+        "%%\n(c1)".should compile
+      end
+
+      it 'f clef on the 3rd line' do
+        "%%\n(f3)".should compile
       end
     end
 
