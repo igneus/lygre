@@ -22,7 +22,7 @@ grammar Gabc
   end
 
   rule inline_whitespace
-    (" " / "\t")
+    (" " / "\t")+
   end
 
   rule any_whitespace
@@ -31,10 +31,10 @@ grammar Gabc
 
   rule header_field
     field_id
-    ":" inline_whitespace*
+    ":" inline_whitespace?
     field_value
-    inline_whitespace* ";"
-    inline_whitespace*
+    inline_whitespace? ";"
+    inline_whitespace?
   end
 
   rule field_id
@@ -52,20 +52,37 @@ grammar Gabc
   # body ------------------------------
 
   rule body
-    any_whitespace*
-    clef*
-    any_whitespace*
+    any_whitespace?
+    clef?
+    any_whitespace?
+    ( music_word any_whitespace )*
   end
 
   rule clef
-    "(" clef_symbol line_number ")"
+    "(" clef_symbol clef_bemol? line_number ")"
   end
 
   rule clef_symbol
     "c" / "f"
   end
 
+  rule clef_bemol
+    "b"
+  end
+
   rule line_number
     [1-4]
+  end
+
+  rule music_word
+    music
+  end
+
+  rule music
+    "(" notes ")"
+  end
+
+  rule notes
+    [a-m]
   end
 end

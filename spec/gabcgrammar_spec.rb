@@ -87,8 +87,18 @@ describe 'gabc' do
         "%%\n(c1)".should compile
       end
 
+      it 'c clef with bemol' do
+        "%%\n(cb3)".should compile
+      end
+
       it 'f clef on the 3rd line' do
         "%%\n(f3)".should compile
+      end
+    end
+
+    describe 'music' do
+      it 'some simple notes' do
+        "%%\n(a) (h) (g) ".should compile
       end
     end
 
