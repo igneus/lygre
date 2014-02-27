@@ -19,31 +19,43 @@ describe GabcParser do
     end
   end
 
-  describe 'header' do
+  describe 'header contains' do
         
-    it 'may contain any number of empty lines' do
-      src = "\n\n\n\n%%\n"
-      @parser.parse(src).should compile
+    describe 'whitespace' do
+      it '- any number of empty lines' do
+        src = "\n\n\n\n%%\n"
+        @parser.parse(src).should compile
+      end
+
+      it '- spaces and tabs' do
+        src = "    \n\t\n%%\n"
+        @parser.parse(src).should compile
+      end
     end
 
-    it 'may contain spaces and tabs' do
-      src = "    \n\t\n%%\n"
-      @parser.parse(src).should compile
+    describe 'header fields' do
+      it '- e.g. "name"' do
+        src = "name: incipit;\n%%\n"
+        @parser.parse(src).should compile
+      end
+
+      xit '- a lot of them' do
+        src = load_example 'header.gabc'
+        @parser.parse(src).should compile
+      end
     end
 
-    it 'may contain header field "name"' do
-      src = "name: incipit;\n%%\n"
-      @parser.parse(src).should compile
+    describe 'comments' do
+      it ', which may occupy a whole line' do
+        src = "% comment\n%%\n\n"
+        @parser.parse(src).should compile
+      end
+
+      it 'following whitespace' do
+        src = "  % comm' comm' comment\n%%\n"
+        @parser.parse(src).should compile
+      end
     end
 
-    it 'may contain comments' do
-      src = "% comment\n%%\n\n"
-      @parser.parse(src).should compile
-    end
-
-    xit 'may contain a lot of header fields' do
-      src = load_example 'header.gabc'
-      @parser.parse(src).should compile
-    end
   end
 end
