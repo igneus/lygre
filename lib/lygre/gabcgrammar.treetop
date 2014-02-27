@@ -18,11 +18,7 @@ grammar Gabc
   end
 
   rule header
-    (empty_line / header_field / comment)*
-  end
-
-  rule empty_line
-    inline_whitespace* "\n"
+    ( (inline_whitespace / header_field)* comment* "\n")*
   end
 
   rule inline_whitespace
@@ -34,11 +30,11 @@ grammar Gabc
     ":" inline_whitespace*
     field_value
     inline_whitespace* ";"
-    inline_whitespace* "\n"
+    inline_whitespace*
   end
 
   rule field_id
-    [\w]+
+    [\w-]+
   end
 
   rule field_value
@@ -46,7 +42,7 @@ grammar Gabc
   end
 
   rule comment
-    "%" !"%" [^\n]* "\n"
+    "%" !"%" [^\n]*
   end
 
   # body ------------------------------

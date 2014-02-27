@@ -39,7 +39,12 @@ describe GabcParser do
         @parser.parse(src).should compile
       end
 
-      xit '- a lot of them' do
+      it 'whose identifiers may include dashes' do
+        src = "office-part: introitus/...;\n%%\n"
+        @parser.parse(src).should compile
+      end
+
+      it '- a lot of them' do
         src = load_example 'header.gabc'
         @parser.parse(src).should compile
       end
@@ -53,6 +58,11 @@ describe GabcParser do
 
       it 'following whitespace' do
         src = "  % comm' comm' comment\n%%\n"
+        @parser.parse(src).should compile
+      end
+
+      it 'following header fields' do
+        src = "name: incipit; % what a beautiful name!\n%%\n"
         @parser.parse(src).should compile
       end
     end
