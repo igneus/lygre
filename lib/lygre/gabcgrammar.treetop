@@ -84,7 +84,7 @@ grammar Gabc
   end
 
   rule music
-    "(" notes ")"
+    "(" ( notes / divisio ) ")"
   end
 
   rule notes
@@ -97,5 +97,12 @@ grammar Gabc
 
   rule shape_modifiers
     [owvs]? [~<>]?
+  end
+
+  rule divisio
+    ( "," "_"? ) /
+      "`" /
+      ( ";" [1-6]? ) /
+      ( ":" (":" / "'")? )
   end
 end

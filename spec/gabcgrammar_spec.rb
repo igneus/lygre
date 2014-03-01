@@ -120,6 +120,12 @@ describe 'gabc' do
         it { "%%\n (go) (go~) (go<)".should compile }
         it { "%%\n (gw) (gv) (gs) (gs<)".should compile }
       end
+
+      describe 'divisiones' do
+        it { "%%\n (,) (`) (;) (:) (::)".should compile }
+        it { "%%\n (;1) (;2) (;3) (;4) (;5) (;6)".should compile }
+        it { "%%\n (:') (,_)".should compile }
+      end
     end
 
   end
