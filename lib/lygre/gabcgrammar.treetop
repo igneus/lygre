@@ -91,6 +91,9 @@ grammar Gabc
     "<sp>" ( "R/" / "V/" / "A/" / ("'"? "ae") ) "</sp>"
   end
 
+  # this rule doesn't handle tag mismatch.
+  # However, for the purposes of gabc->lilypond convertor
+  # such an issue may be safely ignored.
   rule formatted_characters
     "<" formatting_tag ">"
     ( regular_word_character / special_word_character / inline_whitespace )+
@@ -106,15 +109,27 @@ grammar Gabc
   end
 
   rule notes
-    pitch shape_modifiers?
+    ( alteration / (initio_debilis? pitch shape_modifiers? rhythmic_sign*) )+
   end
 
   rule pitch
     [a-mA-M]
   end
 
+  rule initio_debilis
+    "-"
+  end
+
   rule shape_modifiers
     [owvs]? [~<>]?
+  end
+
+  rule rhythmic_sign
+    "." / "'" / ( "_" "0"? )
+  end
+
+  rule alteration
+    [a-m] [xy\#]
   end
 
   rule divisio

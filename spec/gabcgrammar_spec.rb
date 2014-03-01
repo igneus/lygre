@@ -119,10 +119,30 @@ describe 'gabc' do
         it { "%%\n (g~) (g<) (g>)".should compile }
         it { "%%\n (go) (go~) (go<)".should compile }
         it { "%%\n (gw) (gv) (gs) (gs<)".should compile }
+        it { "%%\n (-f)".should compile }
       end
 
-      describe 'more complicated neumes' do
+      describe 'rhythmic signs' do
+        it { "%%\n (g.)".should compile }
+        it { "%%\n (g..)".should compile }
+        it { "%%\n (g_)".should compile }
+        it { "%%\n (g')".should compile }
+        it { "%%\n (g_0)".should compile }
+        it { "%%\n (g__0)".should compile }
+        it { "%%\n (g_')".should compile }
+        it { "%%\n (g_h_)".should compile }
+      end
+
+      describe 'composed neumes' do
         it { "%%\n (ghg)".should compile }
+        it { "%%\n (hvGFE)".should compile }
+        it { "%%\n (hghe)".should compile }
+      end
+
+      describe 'alterations' do
+        it { "%%\n (gxg)".should compile }
+        it { "%%\n (gyg)".should compile }
+        it { "%%\n (g#g)".should compile }
       end
 
       describe 'divisiones' do
