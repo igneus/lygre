@@ -80,11 +80,29 @@ grammar Gabc
   end
 
   rule lyrics_syllable
-    [a-zA-Z]+
+    ( regular_word_character / special_word_character / formatted_characters )+
+  end
+
+  rule regular_word_character
+    [a-zA-Z\.:;?!]
+  end
+
+  rule special_word_character
+    "<sp>" ( "R/" / "V/" / "A/" / ("'"? "ae") ) "</sp>"
+  end
+
+  rule formatted_characters
+    "<" formatting_tag ">"
+    ( regular_word_character / special_word_character / inline_whitespace )+
+    "</" formatting_tag ">"
+  end
+
+  rule formatting_tag
+    "b" / "i" / "sc"
   end
 
   rule music
-    "(" ( notes / divisio ) ")"
+    "(" ( notes / divisio )? ")"
   end
 
   rule notes

@@ -104,11 +104,11 @@ describe 'gabc' do
       end
 
       it 'all possible notes' do
-        "%%\n (a) (b) (c) (d) (e) (f) (g) (h) (i) (j) (k) (l) (m)"
+        "%%\n (a) (b) (c) (d) (e) (f) (g) (h) (i) (j) (k) (l) (m)".should compile
       end
 
-      it 'simple word with simple notes' do
-        "%%\n or(h)bis(h)".should compile
+      it 'empty music chunk is also valid' do
+        "%%\n ()".should compile
       end
 
       # TODO: non-ascii characters are often used in chant lyrics
@@ -121,10 +121,31 @@ describe 'gabc' do
         it { "%%\n (gw) (gv) (gs) (gs<)".should compile }
       end
 
+      describe 'more complicated neumes' do
+        it { "%%\n (ghg)".should compile }
+      end
+
       describe 'divisiones' do
         it { "%%\n (,) (`) (;) (:) (::)".should compile }
         it { "%%\n (;1) (;2) (;3) (;4) (;5) (;6)".should compile }
         it { "%%\n (:') (,_)".should compile }
+      end
+    end
+
+    describe 'lyrics' do
+      it 'simple word with simple notes' do
+        "%%\n or(h)bis(h)".should compile
+      end
+
+      describe 'special characters' do
+        it { "%%\n <sp>R/</sp>() re(g)spon(f)sum(e)".should compile }
+        it { "%%\n tu(h)<sp>'ae</sp>(h)".should compile }
+      end
+
+      describe 'formatting' do
+        it { "%%\n <b>tu</b>(h)ae(h)".should compile }
+        it { "%%\n po(h)<i>pu</i>(h)<i>li</i>(h)".should compile }
+        it { "%%\n <sc>can. i</sc>()".should compile }
       end
     end
 
