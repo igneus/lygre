@@ -111,8 +111,6 @@ describe 'gabc' do
         "%%\n ()".should compile
       end
 
-      # TODO: non-ascii characters are often used in chant lyrics
-
       describe 'one-note neumes without and with shape modifiers' do
         it { "%%\n (g)".should compile }
         it { "%%\n (G) (G~) (G>)".should compile } 
@@ -196,6 +194,10 @@ describe 'gabc' do
         it { "%%\n (g[ob:0;7mm])".should compile }
         it { "%%\n (g[ocb:1;6mm])".should compile }
         it { "%%\n (g[ocba:1;6mm])".should compile }
+      end
+
+      describe 'real-life examples that once failed' do
+        it { "%%\n ad(IV./hig))".should compile }
       end
     end
 
