@@ -105,15 +105,28 @@ grammar Gabc
   end
 
   rule music
-    "(" ( notes / divisio )? ")"
+    "(" ( guide / notes / divisio )? ")"
   end
 
   rule notes
-    ( alteration / (initio_debilis? pitch shape_modifiers? rhythmic_sign*) )+
+    ( alteration / (note choral_sign? brace?) / space / custos / linebreak )+
   end
 
-  rule pitch
-    [a-mA-M]
+  rule note
+    initio_debilis? note_pitch shape_modifiers? rhythmic_sign* accent?
+  end
+
+  rule note_pitch
+    simple_pitch / punctum_inclinatum_pitch
+  end
+
+  # used not only in notes
+  rule simple_pitch
+    [a-m]
+  end
+
+  rule punctum_inclinatum_pitch
+    [A-M]
   end
 
   rule initio_debilis
@@ -121,15 +134,37 @@ grammar Gabc
   end
 
   rule shape_modifiers
-    [owvs]? [~<>]?
+    ( [owqWR] / "v"+ / "s"+ / ([r] "0"? ![1-5]) )? [~<>]?
   end
 
   rule rhythmic_sign
     "." / "'" / ( "_" "0"? )
   end
 
+  rule accent
+    "r" [1-5]
+  end
+
+  rule space
+    ( "!"? ( ("/" "/"?) / " " ) ) /
+      "!"
+  end
+
+  rule linebreak
+    [zZ]
+  end
+
+  rule custos
+    "z0"
+  end
+
+  # ~ custos at the end of a score
+  rule guide
+    simple_pitch "+"
+  end
+
   rule alteration
-    [a-m] [xy\#]
+    simple_pitch [xy\#]
   end
 
   rule divisio
@@ -137,5 +172,13 @@ grammar Gabc
       "`" /
       ( ";" [1-6]? ) /
       ( ":" (":" / "'")? )
+  end
+
+  rule choral_sign
+    "[cs:" [^\]]+ "]"
+  end
+
+  rule brace
+    "[o" "c"? "b" "a"? ":" [01] ";" [0-9]+ ("mm" / "cm") "]"
   end
 end

@@ -120,6 +120,14 @@ describe 'gabc' do
         it { "%%\n (go) (go~) (go<)".should compile }
         it { "%%\n (gw) (gv) (gs) (gs<)".should compile }
         it { "%%\n (-f)".should compile }
+        it { "%%\n (gqi)".should compile }
+        it { "%%\n (gWi)".should compile }
+        it { "%%\n (gr) (gR) (gr0)".should compile }
+      end
+
+      describe 'repetitions' do
+        it { "%%\n (gvv)".should compile }
+        it { "%%\n (gsss)".should compile }
       end
 
       describe 'rhythmic signs' do
@@ -131,6 +139,12 @@ describe 'gabc' do
         it { "%%\n (g__0)".should compile }
         it { "%%\n (g_')".should compile }
         it { "%%\n (g_h_)".should compile }
+      end
+
+      describe 'accents' do
+        it { "%%\n (gr1)".should compile }
+        it { "%%\n (gr0r1)".should compile } # linea punctum cavum + accent
+        it { "%%\n (gr2) (gr3) (gr4) (gr5)".should compile }
       end
 
       describe 'composed neumes' do
@@ -145,10 +159,43 @@ describe 'gabc' do
         it { "%%\n (g#g)".should compile }
       end
 
+      describe 'spaces' do
+        it { "%%\n (h/h)".should compile }
+        it { "%%\n (h//h)".should compile }
+        it { "%%\n (h h)".should compile }
+        it 'unbreakable space' do 
+          "%%\n (h! h)".should compile 
+        end
+        it 'prevent note linking' do
+          "%%\n (gh!i)".should compile 
+        end
+      end
+
       describe 'divisiones' do
         it { "%%\n (,) (`) (;) (:) (::)".should compile }
         it { "%%\n (;1) (;2) (;3) (;4) (;5) (;6)".should compile }
         it { "%%\n (:') (,_)".should compile }
+      end
+
+      describe 'forced line-breaks' do
+        it { "%%\n (ez)".should compile }
+        it { "%%\n (eZ)".should compile }
+      end
+
+      describe 'custos, guide' do
+        it { "%%\n (z0)".should compile }
+        it { "%%\n (h) (g) (::) (h+)".should compile }
+      end
+
+      describe 'choral signs' do
+        it { "%%\n (g[cs:sign]h)".should compile }
+      end
+
+      describe 'braces' do
+        it { "%%\n (g[ob:1;6mm])".should compile }
+        it { "%%\n (g[ob:0;7mm])".should compile }
+        it { "%%\n (g[ocb:1;6mm])".should compile }
+        it { "%%\n (g[ocba:1;6mm])".should compile }
       end
     end
 
