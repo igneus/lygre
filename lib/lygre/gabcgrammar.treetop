@@ -6,7 +6,7 @@ grammar Gabc
   rule score
     header
     header_delimiter
-    body
+    body <ScoreNode>
   end
 
   # header ----------------------------
@@ -18,7 +18,7 @@ grammar Gabc
   end
 
   rule header
-    ( (inline_whitespace / header_field)* comment* "\n")*
+    ( (inline_whitespace / header_field)* comment* "\n")* <HeaderNode>
   end
 
   rule inline_whitespace
@@ -34,7 +34,7 @@ grammar Gabc
     ":" inline_whitespace?
     field_value
     inline_whitespace? ";"
-    inline_whitespace?
+    inline_whitespace? <HeaderFieldNode>
   end
 
   rule field_id

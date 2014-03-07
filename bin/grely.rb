@@ -8,10 +8,7 @@
 # now it only
 # says if it is able to parse the given input file 
 
-require 'polyglot'
-require 'treetop'
-
-Treetop.load File.expand_path('../lib/lygre/gabcgrammar', File.dirname(__FILE__))
+require 'grely'
 
 parser = GabcParser.new
 

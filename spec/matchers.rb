@@ -7,6 +7,6 @@
 # @parser.parse(text).should compile
 RSpec::Matchers.define :compile do
   match do |actual|
-    GabcParser.new.parse(actual).instance_of? Treetop::Runtime::SyntaxNode
+    GabcParser.new.parse(actual).kind_of? Treetop::Runtime::SyntaxNode
   end
 end
