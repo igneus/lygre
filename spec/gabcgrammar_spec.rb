@@ -197,7 +197,7 @@ describe 'gabc' do
       end
 
       describe 'real-life examples that once failed' do
-        it { "%%\n ad(IV./hig))".should compile }
+        it { "%%\n ad(IV./hig)".should compile }
       end
     end
 
