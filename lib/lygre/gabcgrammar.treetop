@@ -11,12 +11,6 @@ grammar Gabc
 
   # header ----------------------------
 
-  # it is important that this rule has higher priority than
-  # the 'comment' rule
-  rule header_delimiter
-    "%%\n"
-  end
-
   rule header
     ( (inline_whitespace / header_field)* comment* "\n")* <HeaderNode>
   end
@@ -47,6 +41,10 @@ grammar Gabc
 
   rule comment
     "%" !"%" [^\n]*
+  end
+
+  rule header_delimiter
+    "%%\n"
   end
 
   # body ------------------------------
