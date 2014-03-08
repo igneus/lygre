@@ -66,7 +66,44 @@ module Gabc
                                 bemol: (clef.bemol.text_value == 'b'))
         end
 
+        words = []
+        each_element do |ele|
+          if ele.is_a? WordNode then
+            words << ele.create_word
+          else
+            ele.each_element do |elel|
+              elel.each_element do |elelel|
+                if elelel.is_a? WordNode then
+                  words << elelel.create_word
+                end
+              end
+            end
+          end
+        end
+        m.words = words
+
       end
     end
+  end
+
+  module WordNode
+
+    def create_word
+      w = []
+
+      each_element do |ele|
+        next unless ele.is_a? SyllableNode
+        #p ele
+        w << GabcSyllable.new do |s|
+          s.lyrics = ele.lyrics.text_value
+        end
+      end
+
+      return GabcWord.new w
+    end
+  end
+
+  module SyllableNode
+
   end
 end

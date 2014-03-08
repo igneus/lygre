@@ -10,3 +10,11 @@ RSpec::Matchers.define :compile do
     GabcParser.new.parse(actual).kind_of? Treetop::Runtime::SyntaxNode
   end
 end
+
+RSpec::Matchers.define :contain_a do |expected_kind|
+  match do |actual_collection|
+    found = false
+    actual_collection.each {|e| found = true if e.is_a? expected_kind }
+    found
+  end
+end

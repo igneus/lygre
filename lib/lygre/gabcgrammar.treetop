@@ -73,7 +73,11 @@ grammar Gabc
   end
 
   rule music_word
-    ( lyrics_syllable? music )+
+    music_syllable+ <WordNode>
+  end
+
+  rule music_syllable
+    lyrics:lyrics_syllable? music <SyllableNode>
   end
 
   rule lyrics_syllable
@@ -81,10 +85,9 @@ grammar Gabc
   end
 
   rule regular_word_character
-    [a-zA-Z] / [
-                \u003f-\u007f # gabc-safe basic latin characters
-                \u0080-\u00ff # latin 1 - supplement
-               ] / [\.,:;?!*]
+    [a-zA-Z] / [\.,:;?!*] /
+      [\u003f-\u007e] / # gabc-safe basic latin characters
+      [\u0080-\u00ff] # latin 1 - supplement
   end
 
   rule special_word_character

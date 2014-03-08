@@ -32,6 +32,9 @@ end
 class GabcMusic < Immutable
 
   attr_accessor :clef
+
+  # Array of GabcWords
+  attr_accessor :words
 end
 
 class GabcClef < Immutable
@@ -48,4 +51,31 @@ class GabcClef < Immutable
   def to_s
     pitch + (bemol ? 'b' : '') + line.to_s
   end
+end
+
+# collection of syllables
+class GabcWord < Array
+
+  def initialize(*args)
+    super(*args)
+    freeze
+  end
+end
+
+class GabcSyllable < Immutable
+
+  # String; may be empty
+  attr_accessor :lyrics
+
+  # Array of GabcNotes and other objects; may be empty
+  attr_accessor :notes
+end
+
+class GabcNote < Immutable
+  
+  attr_accessor :pitch
+  attr_accessor :shape
+  attr_accessor :initio_debilis
+  attr_accessor :rhythmic_signs
+  attr_accessor :accent
 end
