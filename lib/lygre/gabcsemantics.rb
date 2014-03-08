@@ -93,17 +93,38 @@ module Gabc
 
       each_element do |ele|
         next unless ele.is_a? SyllableNode
-        #p ele
         w << GabcSyllable.new do |s|
           s.lyrics = ele.lyrics.text_value
+          s.notes = collect_notes ele
         end
       end
 
       return GabcWord.new w
     end
+
+    private
+
+    # recursively collects notes from a node
+    def collect_notes(node, arr=[])
+      node.each_element do |ele|
+        if ele.is_a? NoteNode then
+          arr << GabcNote.new do |n|
+            n.pitch = ele.note_pitch.text_value.downcase.to_sym
+          end
+        else
+          collect_notes ele, arr
+        end
+      end
+
+      return arr
+    end
   end
 
   module SyllableNode
+
+  end
+
+  class NoteNode < SyntaxNode
 
   end
 end

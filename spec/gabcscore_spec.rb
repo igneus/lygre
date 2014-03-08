@@ -127,12 +127,17 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     it { should contain_a GabcSyllable }
   end
 
-  describe 'word contents' do
+  describe 'lyrics' do
     it { @word.size.should eq 3 }
     it { @word.first.lyrics.should eq 'Pó' }
     it { @word[1].lyrics.should eq 'pu' }
     it { @music.words[1].first.lyrics.should eq 'Si' }
     it { @music.words[-2].last.lyrics.should eq 'et.' }
     it { @music.words.last.last.lyrics.should eq '' }
+  end
+
+  describe 'notes' do
+    it { @word.first.notes.should_not be_empty }
+    it { @word.first.notes.first.pitch.should eq :e }
   end
 end

@@ -117,6 +117,7 @@ grammar Gabc
 
   rule note
     initio_debilis? note_pitch shape_modifiers? rhythmic_sign* accent?
+    <NoteNode>
   end
 
   rule note_pitch
