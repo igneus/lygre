@@ -6,7 +6,8 @@ grammar Gabc
   rule score
     header
     header_delimiter
-    body <ScoreNode>
+    body
+    <ScoreNode>
   end
 
   # header ----------------------------
@@ -28,7 +29,8 @@ grammar Gabc
     ":" inline_whitespace?
     field_value
     inline_whitespace? ";"
-    inline_whitespace? <HeaderFieldNode>
+    inline_whitespace?
+    <HeaderFieldNode>
   end
 
   rule field_id
@@ -53,20 +55,17 @@ grammar Gabc
     any_whitespace?
     clef?
     any_whitespace?
-    ( music_word any_whitespace )* 
+    ( music_word any_whitespace )*
     music_word?
+    <BodyNode>
   end
 
   rule clef
-    "(" clef_symbol clef_bemol? line_number ")"
+    "(" clef_symbol bemol:"b"? line_number ")"
   end
 
   rule clef_symbol
     "c" / "f"
-  end
-
-  rule clef_bemol
-    "b"
   end
 
   rule line_number
