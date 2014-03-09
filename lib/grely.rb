@@ -1,7 +1,10 @@
 # libraries needed for the gregorio -> lilypond conversion
 
-require_relative 'lygre/gabcscore'
-require_relative 'lygre/gabcsemantics'
+%w{ 
+gabcscore 
+gabcsemantics
+lilypondconvertor
+}.each {|f| require_relative File.join('lygre', f)}
 
 # gabc parser
 require 'polyglot'

@@ -61,7 +61,7 @@ module Gabc
 
         clef = elements.find {|e| e.respond_to? :clef_symbol }
         if clef != nil then
-          m.clef = GabcClef.new(pitch: clef.clef_symbol.text_value, 
+          m.clef = GabcClef.new(pitch: clef.clef_symbol.text_value.to_sym, 
                                 line: clef.line_number.text_value.to_i,
                                 bemol: (clef.bemol.text_value == 'b'))
         end

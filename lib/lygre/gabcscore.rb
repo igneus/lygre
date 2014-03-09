@@ -49,7 +49,7 @@ class GabcClef < Immutable
   attr_accessor :bemol
 
   def to_s
-    pitch + (bemol ? 'b' : '') + line.to_s
+    "#{pitch}#{bemol ? 'b' : ''}#{line}"
   end
 end
 
@@ -60,6 +60,8 @@ class GabcWord < Array
     super(*args)
     freeze
   end
+
+  alias_method :each_syllable, :each
 end
 
 class GabcSyllable < Immutable

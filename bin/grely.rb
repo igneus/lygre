@@ -25,6 +25,7 @@ result = parser.parse(input)
 
 if result then
   STDERR.puts 'grely thinks this is a valid gabc file.'
+  puts SimpleLilypondConvertor.new.convert result.create_score
   exit 0
 else
   STDERR.puts 'grely thinks the input is not valid gabc:'
