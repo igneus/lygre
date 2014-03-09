@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/igneus/rb-music-theory.git
+  revision: af7c9145e853a774bd8bff0ed520c9280099e58d
+  specs:
+    rb-music-theory (0.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -56,5 +62,6 @@ PLATFORMS
 DEPENDENCIES
   guard-rspec
   polyglot
+  rb-music-theory!
   rspec
   treetop

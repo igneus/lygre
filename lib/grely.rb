@@ -3,6 +3,7 @@
 %w{ 
 gabcscore 
 gabcsemantics
+gabcpitchreader
 lilypondconvertor
 }.each {|f| require_relative File.join('lygre', f)}
 
