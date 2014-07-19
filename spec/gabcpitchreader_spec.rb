@@ -83,5 +83,18 @@ describe 'monkey-patched RBMusicTheory' do
     it { @f["c,"].base_octave_difference(@s).should eq -36 }
   end
 
-  
+  describe 'Scale#degree' do
+    describe 'for positive degrees it behaves as expected' do
+      it { @s.degree(1).should eq @f["c''"] }
+      it { @s.degree(2).should eq @f["d''"] }
+      it { @s.degree(8).should eq @f["c'''"] }
+    end
+
+    describe 'and then there is zero and negative numbers' do
+      it { @s.degree(0).should eq @f["b'"] }
+      it { @s.degree(-1).should eq @f["a'"] }
+      it { @s.degree(-8).should eq @f["a"] }
+      it { @s.degree(-15).should eq @f["a,"] }
+    end
+  end
 end
