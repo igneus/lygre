@@ -79,5 +79,28 @@ describe LilypondConvertor do
           eq "\\score { \\absolute { a' d' } \\addlyrics { } }"
       end
     end
+
+    describe 'barlines' do
+
+      it 'translates : to \bar "|"' do
+        @c.convert_min(gabc2score("%%\n(c4) (j) (:)")).should \
+          eq "\\score { \\absolute { c'' \\bar \"|\" } \\addlyrics { } }"
+      end
+
+      it 'translates ; to \bar "|"' do
+        @c.convert_min(gabc2score("%%\n(c4) (j) (;)")).should \
+          eq "\\score { \\absolute { c'' \\bar \"|\" } \\addlyrics { } }"
+      end
+
+      it 'translates :: to \bar "||"' do
+        @c.convert_min(gabc2score("%%\n(c4) (j) (::)")).should \
+          eq "\\score { \\absolute { c'' \\bar \"||\" } \\addlyrics { } }"
+      end
+
+      it 'translates , to \bar "|"' do
+        @c.convert_min(gabc2score("%%\n(c4) (j) (,)")).should \
+          eq "\\score { \\absolute { c'' \\bar \"'\" } \\addlyrics { } }"
+      end
+    end
   end
 end

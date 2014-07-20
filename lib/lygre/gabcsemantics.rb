@@ -111,6 +111,10 @@ module Gabc
           arr << GabcNote.new do |n|
             n.pitch = ele.note_pitch.text_value.downcase.to_sym
           end
+        elsif ele.is_a? DivisioNode then
+          arr << GabcDivisio.new do |d|
+            d.type = ele.text_value
+          end
         else
           collect_notes ele, arr
         end
@@ -125,6 +129,10 @@ module Gabc
   end
 
   class NoteNode < SyntaxNode
+
+  end
+
+  module DivisioNode
 
   end
 end

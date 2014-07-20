@@ -172,10 +172,11 @@ grammar Gabc
   end
 
   rule divisio
-    ( "," "_"? ) /
+    (( "," "_"? ) /
       "`" /
       ( ";" [1-6]? ) /
-      ( ":" (":" / "'")? )
+      ( ":" (":" / "'")? ))
+    <DivisioNode>
   end
 
   rule choral_sign

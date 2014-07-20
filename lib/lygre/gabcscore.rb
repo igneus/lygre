@@ -41,7 +41,7 @@ class GabcClef < Immutable
 
   # 'c' or 'f'
   attr_accessor :pitch
-  
+
   # Integer 1...4
   attr_accessor :line
 
@@ -74,10 +74,15 @@ class GabcSyllable < Immutable
 end
 
 class GabcNote < Immutable
-  
+
   attr_accessor :pitch
   attr_accessor :shape
   attr_accessor :initio_debilis
   attr_accessor :rhythmic_signs
   attr_accessor :accent
+end
+
+class GabcDivisio < Immutable
+
+  attr_accessor :type
 end

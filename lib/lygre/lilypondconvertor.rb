@@ -12,6 +12,14 @@ class LilypondConvertor
 
   DEFAULT_CLEF = GabcClef.new(pitch: :c, line: 4, bemol: false)
 
+  # maps gabc divisiones to lilypond bars
+  BARS = {
+          ':' => '\bar "|"',
+          ';' => '\bar "|"',
+          '::' => '\bar "||"',
+          ',' => '\bar "\'"'
+         }
+
   def initialize(settings={})
     @settings = DEFAULT_SETTINGS.dup.update(settings)
 
@@ -94,8 +102,21 @@ class LilypondConvertor
       if notes.empty? then
         r << 's'
       else
-        sylnotes = notes.collect do |n| 
-          NoteFactory.lily_abs_pitch(@gabc_reader.pitch(n.pitch))
+        sylnotes = notes.collect do |n|
+          if n.is_a? GabcNote then
+            NoteFactory.lily_abs_pitch(@gabc_reader.pitch(n.pitch))
+
+          elsif n.is_a? GabcDivisio then
+            divisio = n.type
+            unless BARS.has_key? divisio
+              raise RuntimeError.new "Unhandled bar type '#{n.type}'"
+            end
+
+            BARS[divisio].dup
+
+          else
+            raise RuntimeError.new "Unknown music content #{n}"
+          end
         end
 
         if notes.size >= 2 then
