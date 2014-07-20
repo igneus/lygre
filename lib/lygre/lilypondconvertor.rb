@@ -129,6 +129,20 @@ class LilypondConvertor
   end
 
   def word_lyrics(word)
-    word.collect {|w| w.lyrics }.join ' -- '
+    word.collect do |syll|
+      l = syll.lyrics
+
+      if syll.lyrics.start_with? '*' then
+        l = '"' + syll.lyrics + '"'
+      end
+
+      if syll.notes.size == 1 and
+          syll.notes.first.is_a? GabcDivisio and
+          syll.lyrics.size > 0 then
+        l = '\set stanza = \markup{'+syll.lyrics+'}'
+      end
+
+      l
+    end.join ' -- '
   end
 end

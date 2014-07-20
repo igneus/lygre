@@ -102,5 +102,18 @@ describe LilypondConvertor do
           eq "\\score { \\absolute { c'' \\bar \"'\" } \\addlyrics { } }"
       end
     end
+
+    describe 'handles special cases of lyrics: ' do
+
+      it 'quotes syllable beginning with asterisk' do
+        @c.convert_min(gabc2score("%%\n(c4) *la(j)")).should \
+          eq "\\score { \\absolute { c'' } \\addlyrics { \"*la\" } }"
+      end
+
+      it 'handles lyrics under a divisio' do
+        @c.convert_min(gabc2score("%%\n(c4) Ps.(::)")).should \
+          eq "\\score { \\absolute { \\bar \"||\" } \\addlyrics { \\set stanza = \\markup{Ps.} } }"
+      end
+    end
   end
 end
