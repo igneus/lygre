@@ -136,10 +136,21 @@ class LilypondConvertor
         l = '"' + syll.lyrics + '"'
       end
 
+      if syll.lyrics.include? '<' then
+        l = syll.lyrics.gsub(/<i>([^<]+)<\/i>/) do |m|
+          '\italic{' + $1 + '}'
+        end
+        l = '\markup{'+l+'}'
+      end
+
       if syll.notes.size == 1 and
           syll.notes.first.is_a? GabcDivisio and
           syll.lyrics.size > 0 then
-        l = '\set stanza = \markup{'+syll.lyrics+'}'
+
+        unless l.start_with? '\markup'
+          l = '\markup{'+l+'}'
+        end
+        l = '\set stanza = '+l
       end
 
       l

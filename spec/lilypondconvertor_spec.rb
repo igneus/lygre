@@ -114,6 +114,16 @@ describe LilypondConvertor do
         @c.convert_min(gabc2score("%%\n(c4) Ps.(::)")).should \
           eq "\\score { \\absolute { \\bar \"||\" } \\addlyrics { \\set stanza = \\markup{Ps.} } }"
       end
+
+      it 'handles italic in plain lyrics' do
+        @c.convert_min(gabc2score("%%\n(c4) <i>heu</i>(j)")).should \
+          eq "\\score { \\absolute { c'' } \\addlyrics { \\markup{\\italic{heu}} } }"
+      end
+
+      it 'handles italic in lyrics under a divisio' do
+        @c.convert_min(gabc2score("%%\n(c4) <i>Ps.</i>(::)")).should \
+          eq "\\score { \\absolute { \\bar \"||\" } \\addlyrics { \\set stanza = \\markup{\\italic{Ps.}} } }"
+      end
     end
   end
 end
