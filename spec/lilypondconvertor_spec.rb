@@ -47,5 +47,37 @@ describe LilypondConvertor do
 
     end
 
+    describe 'clefs and their positions' do
+
+      it 'handles c4' do
+        @c.convert_min(gabc2score("%%\n(c4) (h) (d)")).should \
+          eq "\\score { \\absolute { a' d' } \\addlyrics { } }"
+      end
+
+      it 'handles c3' do
+        @c.convert_min(gabc2score("%%\n(c3) (h) (d)")).should \
+          eq "\\score { \\absolute { c'' f' } \\addlyrics { } }"
+      end
+
+      it 'handles c2' do
+        @c.convert_min(gabc2score("%%\n(c2) (h) (d)")).should \
+          eq "\\score { \\absolute { e'' a' } \\addlyrics { } }"
+      end
+
+      it 'handles c1' do
+        @c.convert_min(gabc2score("%%\n(c1) (h) (d)")).should \
+          eq "\\score { \\absolute { g'' c'' } \\addlyrics { } }"
+      end
+
+      it 'handles f3' do
+        @c.convert_min(gabc2score("%%\n(f3) (h) (d)")).should \
+          eq "\\score { \\absolute { f' b } \\addlyrics { } }"
+      end
+
+      it 'handles f2' do
+        @c.convert_min(gabc2score("%%\n(f2) (h) (d)")).should \
+          eq "\\score { \\absolute { a' d' } \\addlyrics { } }"
+      end
+    end
   end
 end

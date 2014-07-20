@@ -10,6 +10,8 @@ class LilypondConvertor
                       header: true
                      }
 
+  DEFAULT_CLEF = GabcClef.new(pitch: :c, line: 4, bemol: false)
+
   def initialize(settings={})
     @settings = DEFAULT_SETTINGS.dup.update(settings)
 
@@ -29,9 +31,12 @@ class LilypondConvertor
     notes = []
     lyrics = []
 
-    @gabc_reader = GabcPitchReader.new :c, 4
-
     clef = score.music.clef
+    if clef == nil then
+      clef = DEFAULT_CLEF
+    end
+    @gabc_reader = GabcPitchReader.new clef.pitch, clef.line
+
     score.music.words.each do |word|
       notes << word_notes(word, clef)
       lyrics << word_lyrics(word)
