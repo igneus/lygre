@@ -78,46 +78,32 @@ module RBMusicTheory
         scale = self.class.new('C').major_scale
       end
 
-      octave_steps = 7
+      deg = self.degree_in(scale)
 
-      # we use abs for division because in Ruby -9 / 7 => -2
-      octave_shift = steps.abs / octave_steps
-      if steps < 0 then
-        octave_shift *= -1
-      end
-
-      # this mysterious correction should be understood or swept away somehow
-      if steps > 0 or steps.abs <= octave_steps then
-        octave_shift -= 1
-      end
-
-      # because in Ruby -9 % 7 => 5
-      steps2 = steps.abs % octave_steps
-      if steps < 0 then
-        steps2 *= -1 
-      end
-
-      degree = self.degree_in(scale)
-
-      return scale.degree(degree + steps2) + # returns a note of an arbitrary 'base' octave
-        self.base_octave_difference(scale) + # correction to the octave of self
-        RBMusicTheory::NoteInterval.octave.value * (octave_shift) # octave shift
+      return scale.degree(deg + steps)
     end
 
     # note's degree in a scale
     def degree_in(scale)
-      degree = scale.note_names.index(self.name) 
+      degree = scale.note_names.index(self.name)
       if degree.nil? then
         raise ArgumentError.new("#{name} is not a member of #{scale.note_names} scale")
       end
-      return degree + 1 # degrees start with 1
-    end
+      degree += 1 # degrees start with 1
 
-    # difference between the note's value and the value of
-    # the scale's 'base note' of the same degree
-    # (the 'base octave' is set on scale initialization)
-    def base_octave_difference(scale)
-      value - scale.degree(degree_in(scale)).value
+      in_base_octave = scale.degree(degree)
+      octave_steps = scale.note_names.size
+      octave_value = RBMusicTheory::NoteInterval.octave.value
+
+      value_difference = self.value - in_base_octave.value
+      octave_difference = value_difference.abs / octave_value
+      if value_difference < 0 then
+        octave_difference *= -1
+      end
+
+      degree += octave_difference * octave_steps
+
+      return degree
     end
   end
 end

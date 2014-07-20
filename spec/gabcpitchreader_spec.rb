@@ -59,28 +59,36 @@ describe 'monkey-patched RBMusicTheory' do
 
   before :each do
     @f = NoteFactory
-    @n = @f["c''"]
     @s = @f["c''"].major_scale
   end
 
   describe 'Note#diatonic_steps' do
-    it { @n.diatonic_steps(1).should eq @f["d'"] }
-    it { @n.diatonic_steps(0).should eq @f["c'"] }
-    it { @n.diatonic_steps(7).should eq @f["c''"] }
-    it { @n.diatonic_steps(8).should eq @f["d''"] }
-    it { @n.diatonic_steps(-2).should eq @f["a"] }
+    it { @f["c'"].diatonic_steps(1).should eq @f["d'"] }
+    it { @f["c'"].diatonic_steps(0).should eq @f["c'"] }
+    it { @f["c'"].diatonic_steps(7).should eq @f["c''"] }
+    it { @f["c'"].diatonic_steps(8).should eq @f["d''"] }
+    it { @f["c'"].diatonic_steps(-2).should eq @f["a"] }
     it { @f["c''"].diatonic_steps(-9).should eq @f["a"] }
     it { @f["c'''"].diatonic_steps(-9).should eq @f["a'"] }
     it { @f["c,"].diatonic_steps(-9).should eq @f["a,,,"] }
     it { @f["c,"].diatonic_steps(-10).should eq @f["g,,,"] }
   end
 
-  describe 'Note#base_octave_difference' do
-    it { @f["c'''"].base_octave_difference(@s).should eq 12 }
-    it { @f["c''"].base_octave_difference(@s).should eq 0 }
-    it { @f["c'"].base_octave_difference(@s).should eq -12 }
-    it { @f["c"].base_octave_difference(@s).should eq -24 }
-    it { @f["c,"].base_octave_difference(@s).should eq -36 }
+  describe 'Note#degree_in' do
+    it { @f["c''"].degree_in(@s).should eq 1 }
+    it { @f["d''"].degree_in(@s).should eq 2 }
+
+    it { @f["c'''"].degree_in(@s).should eq 8 }
+    it { @f["e'''"].degree_in(@s).should eq 10 }
+    it { @f["b'"].degree_in(@s).should eq 0 }
+    it { @f["a'"].degree_in(@s).should eq -1 }
+    it { @f["a"].degree_in(@s).should eq -8 }
+
+    it 'behaves consistently with Scale#degree' do
+      [2, 8, -1, -12].each do |deg|
+        @s.degree(deg).degree_in(@s).should eq deg
+      end
+    end
   end
 
   describe 'Scale#degree' do
