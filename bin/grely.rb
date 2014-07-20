@@ -25,10 +25,10 @@ result = parser.parse(input)
 
 if result then
   STDERR.puts 'grely thinks this is a valid gabc file.'
-  puts SimpleLilypondConvertor.new.convert result.create_score
+  puts LilypondConvertor.new.convert result.create_score
   exit 0
 else
-  STDERR.puts 'grely thinks the input is not valid gabc:'
+  STDERR.puts 'grely considers the input invalid gabc:'
   STDERR.puts 
   STDERR.puts "'#{parser.failure_reason}' on line #{parser.failure_line} column #{parser.failure_column}:"
   STDERR.puts input.split("\n")[parser.failure_line-1]
