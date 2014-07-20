@@ -24,6 +24,12 @@ class GabcPitchReader
 
   attr_reader :clef, :clef_position, :base
 
+  # gets a gabc visual pitch, returns a RbMusicTheory::Note
+  def pitch(visual_note)
+    hnote = visual_note.to_s.ord - 'a'.ord # steps from a - the lowest writable gabc note
+    return @base.diatonic_steps(hnote)
+  end
+
   private
 
   def init_base
@@ -65,6 +71,25 @@ class NoteFactory
 
     alias :create_note :create
     alias :[] :create
+
+    # returns a lilypond absolute pitch for the given RbMusicTheory::Note
+    #
+    # this method doesn't fit well in a *factory*, but
+    # #create translates lilypond pitch to Note and #lily_abs_pitch
+    # does the reverse translation, so maybe just the class should be renamed
+    def lily_abs_pitch(note)
+      octave_shifts = ''
+      octave_diff = note.value - create('c').value
+
+      octave_value = RBMusicTheory::NoteInterval.octave.value
+      octave_shift = octave_diff.abs / octave_value
+      if octave_diff < 0 and (octave_diff.abs % octave_value) > 0 then
+        octave_shift += 1
+      end
+
+      octave_signs = (octave_diff >= 0 ? "'" : ",") * octave_shift
+      note.name.downcase + octave_signs
+    end
   end
 end
 

@@ -49,6 +49,14 @@ describe NoteFactory do
     it { expect { @f.create("c*") }.to raise_exception ArgumentError }
   end
 
+  describe '.lily_abs_pitch' do
+    it 'operates exactly reverse to .create' do
+      %w{ c d g c' f' a' b' g'' d''' c, c,, c,,, d, e, e,, b, }.each do |lypitch|
+        @f.lily_abs_pitch(@f[lypitch]).should eq lypitch
+      end
+    end
+  end
+
   describe '[]' do
     it { @f["c'"].value.should eq 60 }
     it { @f["c''"].value.should eq 72 }
