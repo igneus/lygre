@@ -7,7 +7,8 @@ class LilypondConvertor
                       version: true,
                       notes: true,
                       lyrics: true,
-                      header: true
+                      header: true,
+                      cadenza: false
                      }
 
   DEFAULT_CLEF = GabcClef.new(pitch: :c, line: 4, bemol: false)
@@ -57,8 +58,13 @@ class LilypondConvertor
 
     if @settings[:notes] and
         (notes.size > 0 or @settings[:notes] == 'always') then
-      r += "  \\absolute {\n" +
-        "    #{notes.join(" ")}\n" +
+      r += "  \\absolute {\n"
+
+      if @settings[:cadenza] then
+        r += "    \\cadenzaOn\n"
+      end
+
+      r += "    #{notes.join(" ")}\n" +
         "  }\n"
     end
 

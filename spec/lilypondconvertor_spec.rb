@@ -125,5 +125,20 @@ describe LilypondConvertor do
           eq "\\score { \\absolute { \\bar \"||\" } \\addlyrics { \\set stanza = \\markup{\\italic{Ps.}} } }"
       end
     end
+
+    describe 'optional features' do
+
+      it 'cadenza' do
+        LilypondConvertor.new(version: false, cadenza: true) \
+          .convert_min(gabc2score("%%\n(c4) (j)\n")).should \
+          eq '\score { \absolute { \cadenzaOn c\'\' } \addlyrics { } }'
+      end
+
+      it 'lily version' do
+        LilypondConvertor.new(version: true) \
+          .convert_min(gabc2score("%%\n(c4) (j)\n")).should \
+          eq '\version "2.16.0" \score { \absolute { c\'\' } \addlyrics { } }'
+      end
+    end
   end
 end
