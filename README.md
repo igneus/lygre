@@ -30,6 +30,11 @@ In the project folder run *grely* like:
 
     ruby -I ./lib ./bin/grely.rb some_chant.gabc
 
+If no filename is given as argument, grely behaves as a filter and
+processes the standard input:
+
+    cat some_chant.gabc | ruby -I ./lib ./bin/grely.rb
+
 It will print the lilypond source to the standard output.
 (Or cry that the input isn't valid. If you are sure it is,
 please create an issue in the tracker.)
