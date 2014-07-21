@@ -2,11 +2,7 @@
 
 # grely
 
-# one day it will perform
-# conversion gregorio (gabc) -> lilypond
-
-# now it only
-# says if it is able to parse the given input file 
+# converts gabc to lilypond
 
 require 'grely'
 
@@ -24,7 +20,6 @@ input = rf.read
 result = parser.parse(input)
 
 if result then
-  STDERR.puts 'grely thinks this is a valid gabc file.'
   puts LilypondConvertor.new(cadenza: true).convert result.create_score
   exit 0
 else
