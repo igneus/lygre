@@ -47,8 +47,12 @@ class LilypondConvertor
     @gabc_reader = GabcPitchReader.new clef.pitch, clef.line
 
     score.music.words.each_with_index do |word,i|
-      notes << '\bar ""' if i > 0 && @settings[:cadenza]
-      notes << word_notes(word, clef)
+      current = word_notes(word, clef)
+      if i > 0 && @settings[:cadenza] &&
+         ! (notes.last.include?('\bar') || current.include?('\bar'))
+        notes << '\bar ""'
+      end
+      notes << current
       lyrics << word_lyrics(word)
     end
 

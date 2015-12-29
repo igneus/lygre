@@ -128,10 +128,28 @@ describe LilypondConvertor do
 
     describe 'optional features' do
 
-      it 'cadenza' do
-        LilypondConvertor.new(version: false, cadenza: true) \
-          .convert_min(gabc2score("%%\n(c4) (j) (j)\n")).should \
-          eq '\score { \absolute { \cadenzaOn c\'\' \bar "" c\'\' } \addlyrics { } }'
+      describe 'cadenza' do
+        before :each do
+          @convertor = LilypondConvertor.new(version: false, cadenza: true)
+        end
+
+        it 'adds \cadenzaOn' do
+          gabc = gabc2score("%%\n(c4) (j)\n")
+          ly = '\score { \absolute { \cadenzaOn c\'\' } \addlyrics { } }'
+          @convertor.convert_min(gabc).should eq ly
+        end
+
+        it 'inserts invisible bar after each word' do
+          gabc = gabc2score("%%\n(c4) (j) (j)\n")
+          ly = '\score { \absolute { \cadenzaOn c\'\' \bar "" c\'\' } \addlyrics { } }'
+          @convertor.convert_min(gabc).should eq ly
+        end
+
+        it 'does not insert bars around a bar' do
+          gabc = gabc2score("%%\n(c4) (j) (:) (j)\n")
+          ly = '\score { \absolute { \cadenzaOn c\'\' \bar "|" c\'\' } \addlyrics { } }'
+          @convertor.convert_min(gabc).should eq ly
+        end
       end
 
       it 'lily version' do
