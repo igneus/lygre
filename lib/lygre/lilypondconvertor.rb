@@ -34,7 +34,7 @@ class LilypondConvertor
   # converts GabcScore to Lilypond source
   def convert(score)
     header = score.header.keys.sort.collect do |k|
-      "  #{k} = \"#{score.header[k]}\""
+      "    #{k} = \"#{score.header[k]}\""
     end.join "\n"
 
     notes = []
@@ -79,7 +79,7 @@ class LilypondConvertor
     if @settings[:header] and
         (header.size > 0 or @settings[:header] == 'always') then
       r += "  \\header {\n" +
-        "    #{header}\n" +
+        "#{header}\n" +
         "  }\n"
     end
 
