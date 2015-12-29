@@ -130,8 +130,8 @@ describe LilypondConvertor do
 
       it 'cadenza' do
         LilypondConvertor.new(version: false, cadenza: true) \
-          .convert_min(gabc2score("%%\n(c4) (j)\n")).should \
-          eq '\score { \absolute { \cadenzaOn c\'\' } \addlyrics { } }'
+          .convert_min(gabc2score("%%\n(c4) (j) (j)\n")).should \
+          eq '\score { \absolute { \cadenzaOn c\'\' \bar "" c\'\' } \addlyrics { } }'
       end
 
       it 'lily version' do
