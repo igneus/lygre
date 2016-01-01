@@ -90,7 +90,7 @@ grammar Gabc
   end
 
   rule word_character
-    regular_word_character / special_word_character / formatted_characters
+    regular_word_character / special_word_character / formatted_characters / text_above_lines
   end
 
   rule regular_word_character
@@ -116,6 +116,12 @@ grammar Gabc
 
   rule formatting_tag
     "b" / "i" / "sc" / "v"
+  end
+
+  rule text_above_lines
+    "<alt>"
+    ( regular_word_character / inline_whitespace )+
+    "</alt>"
   end
 
   rule music
