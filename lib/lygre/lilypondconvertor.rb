@@ -41,19 +41,17 @@ class LilypondConvertor
     notes = []
     lyrics = []
 
-    clef = score.music.clef
-    if clef == nil then
-      clef = DEFAULT_CLEF
-    end
+    clef = DEFAULT_CLEF
     @gabc_reader = GabcPitchReader.new clef.pitch, clef.line
 
     score.music.words.each_with_index do |word,i|
       current = word_notes(word, clef)
-      if i > 0 && @settings[:cadenza] &&
-         ! (notes.last.include?('\bar') || current.include?('\bar'))
+      if @settings[:cadenza] &&
+         ! (notes.empty? || current.empty? ||
+            notes.last.include?('\bar') || current.include?('\bar'))
         notes << '\bar ""'
       end
-      notes << current
+      notes << current unless current.empty?
       lyrics << word_lyrics(word)
     end
 
@@ -114,17 +112,21 @@ class LilypondConvertor
       if notes.empty? then
         r << 's'
       else
-        sylnotes = notes.collect do |n|
+        sylnotes = []
+        notes.each do |n|
           if n.is_a? GabcNote then
-            NoteFactory.lily_abs_pitch(@gabc_reader.pitch(n.pitch))
-
+            pitch = @gabc_reader.pitch(n.pitch)
+            sylnotes << NoteFactory.lily_abs_pitch(pitch)
           elsif n.is_a? GabcDivisio then
             divisio = n.type
             unless BARS.has_key? divisio
               raise RuntimeError.new "Unhandled bar type '#{n.type}'"
             end
 
-            BARS[divisio].dup
+            sylnotes << BARS[divisio].dup
+
+          elsif n.is_a? GabcClef then
+            @gabc_reader = GabcPitchReader.new n.pitch, n.line
 
           else
             raise RuntimeError.new "Unknown music content #{n}"

@@ -66,47 +66,11 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     @music = @parser.parse(@src).create_score.music
   end
 
-  describe '#clef' do
-    subject { @music.clef }
-    it { should be_a GabcClef }
-  end
-
   describe '#words' do
     subject { @music.words }
     it { should be_a Array }
     it { should_not be_empty }
     it { should contain_a GabcWord }
-  end
-end
-
-describe GabcClef do
-
-  before :each do
-    # beginning of the Populus Sion example
-    @src = "name: Populus Sion;\n%%\n
-(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;) 
-ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
-    @parser = GabcParser.new
-    @music = @parser.parse(@src).create_score.music
-    @clef = @music.clef
-  end
-
-  it 'should return key from the score' do
-    @clef.to_s.should eq 'c3'
-  end
-
-  it 'has no bemol' do
-    @clef.bemol.should be false
-  end
-
-  describe 'has bemol' do
-    before :each do
-      src = "%%\n(cb3)"
-      @music = @parser.parse(src).create_score.music
-    end 
-
-    it { @music.clef.bemol.should be true }
-    it { @music.clef.to_s.should eq 'cb3' }
   end
 end
 
@@ -118,7 +82,7 @@ describe GabcWord do
 ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     @parser = GabcParser.new
     @music = @parser.parse(@src).create_score.music
-    @word = @music.words.first
+    @word = @music.words[1] # 0 is clef
   end
 
   describe 'a simple word' do
@@ -131,7 +95,7 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     it { @word.size.should eq 3 }
     it { @word.first.lyrics.should eq 'Pó' }
     it { @word[1].lyrics.should eq 'pu' }
-    it { @music.words[1].first.lyrics.should eq 'Si' }
+    it { @music.words[2].first.lyrics.should eq 'Si' }
     it { @music.words[-2].last.lyrics.should eq 'et.' }
     it { @music.words.last.last.lyrics.should eq '' }
   end

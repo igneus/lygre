@@ -13,12 +13,32 @@ describe GabcPitchReader do
     end
   end
 
-  describe '#base returns absolute pitch of the lowest writable note (a)' do
-    #it { GabcPitchReader.new(:c, 4).base.should eq NoteFactory["a"] }
-    #it { GabcPitchReader.new(:f, 2).base.should eq NoteFactory["a"] }
+  describe '#base' do
+    describe 'returns absolute pitch of the lowest writable note (a)' do
+      it { GabcPitchReader.new(:c, 4).base.should eq NoteFactory["a"] }
+      it { GabcPitchReader.new(:f, 2).base.should eq NoteFactory["a"] }
 
-    #it { GabcPitchReader.new(:c, 1).base.should eq NoteFactory["g'"] }
-    #it { GabcPitchReader.new(:f, 1).base.should eq NoteFactory["c'"] }
+      it { GabcPitchReader.new(:c, 1).base.should eq NoteFactory["g'"] }
+      it { GabcPitchReader.new(:f, 1).base.should eq NoteFactory["c'"] }
+    end
+  end
+
+  describe '#pitch' do
+    describe 'in c4' do
+      before :each do
+        @pr = GabcPitchReader.new :c, 4
+      end
+      it { @pr.pitch('h').should eq NoteFactory["a'"] }
+      it { @pr.pitch('d').should eq NoteFactory["d'"] }
+    end
+
+    describe 'in f3' do
+      before :each do
+        @pr = GabcPitchReader.new :f, 3
+      end
+      it { @pr.pitch('h').should eq NoteFactory["f'"] }
+      it { @pr.pitch('d').should eq NoteFactory["b"] }
+    end
   end
 end
 

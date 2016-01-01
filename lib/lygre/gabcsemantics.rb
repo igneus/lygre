@@ -56,14 +56,6 @@ module Gabc
 
     def create_music
       GabcMusic.new do |m|
-
-        clef = elements.find {|e| e.respond_to? :clef_symbol }
-        if clef != nil then
-          m.clef = GabcClef.new(pitch: clef.clef_symbol.text_value.to_sym, 
-                                line: clef.line_number.text_value.to_i,
-                                bemol: (clef.bemol.text_value == 'b'))
-        end
-
         words = []
         each_element do |ele|
           if ele.is_a? WordNode then
@@ -113,6 +105,12 @@ module Gabc
           arr << GabcDivisio.new do |d|
             d.type = ele.text_value
           end
+        elsif ele.is_a? ClefNode then
+          arr << GabcClef.new do |c|
+            c.pitch = ele.clef_symbol.text_value.to_sym
+            c.bemol = ele.bemol.text_value == 'b'
+            c.line = ele.line_number.text_value.to_i
+          end
         else
           collect_notes ele, arr
         end
@@ -123,14 +121,14 @@ module Gabc
   end
 
   module SyllableNode
-
   end
 
   class NoteNode < SyntaxNode
-
   end
 
   module DivisioNode
+  end
 
+  module ClefNode
   end
 end

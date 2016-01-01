@@ -31,8 +31,6 @@ end
 
 class GabcMusic < Immutable
 
-  attr_accessor :clef
-
   # Array of GabcWords
   attr_accessor :words
 end

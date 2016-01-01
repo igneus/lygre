@@ -80,6 +80,20 @@ describe LilypondConvertor do
       end
     end
 
+    describe 'inline clefs' do
+      it 'copes with two clefs after each other' do
+        gabc = gabc2score("%%\n(f3) (c1) (c2) (h)")
+        ly = "\\score { \\absolute { e'' } \\addlyrics { } }"
+        @c.convert_min(gabc).should eq ly
+      end
+
+      it 'correctly resolves pitch in different clefs' do
+        gabc = gabc2score("%%\n(f3) (c4) (h) (c2) (h)")
+        ly = "\\score { \\absolute { a' e'' } \\addlyrics { } }"
+        @c.convert_min(gabc).should eq ly
+      end
+    end
+
     describe 'barlines' do
 
       it 'translates : to \bar "|"' do
