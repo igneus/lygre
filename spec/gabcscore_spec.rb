@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# encoding: utf-8
 
 require_relative 'spec_helper'
 
@@ -96,7 +96,7 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
   end
 
   it 'has no bemol' do
-    @clef.bemol.should be_false
+    @clef.bemol.should be false
   end
 
   describe 'has bemol' do
@@ -105,7 +105,7 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       @music = @parser.parse(src).create_score.music
     end 
 
-    it { @music.clef.bemol.should be_true }
+    it { @music.clef.bemol.should be true }
     it { @music.clef.to_s.should eq 'cb3' }
   end
 end
