@@ -13,7 +13,11 @@ grammar Gabc
   # header ----------------------------
 
   rule header
-    ( (inline_whitespace / header_field)* comment* "\n")* <HeaderNode>
+    ( header_field?
+      inline_whitespace?
+      comment?
+      "\n" )*
+      <HeaderNode>
   end
 
   rule inline_whitespace
@@ -26,10 +30,10 @@ grammar Gabc
 
   rule header_field
     field_id
-    ":" inline_whitespace?
-    field_value
-    inline_whitespace? ";"
+    ":"
     inline_whitespace?
+    field_value
+    ";"
     <HeaderFieldNode>
   end
 

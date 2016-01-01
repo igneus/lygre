@@ -38,11 +38,9 @@ module Gabc
       r = {}
       
       each_element do |lvl1|
-        lvl1.each_element do |lvl2|
-          lvl2.each_element do |field|
-            if field.is_a? HeaderFieldNode then
-              r[field.field_id.text_value] = field.field_value.text_value
-            end
+        lvl1.each_element do |field|
+          if field.is_a? HeaderFieldNode then
+            r[field.field_id.text_value] = field.field_value.text_value
           end
         end
       end

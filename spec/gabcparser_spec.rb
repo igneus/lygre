@@ -18,17 +18,33 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     end
   end
 
-  describe 'header field' do
-    def rparse(str)
-      @parser.parse(str, root: :header_field)
+  describe 'header' do
+    it 'two subsequent header fields' do
+      str = "name:Intret in conspectu;\noffice-part:Introitus;\n"
+      @parser.parse(str, root: :header).should be_truthy
     end
 
-    it 'accepts normal header field' do
-      rparse('name: Populus Sion;').should be_truthy
+    it 'comment+header field' do
+      str = "%comment\nname:Intret in conspectu;\n"
+      @parser.parse(str, root: :header).should be_truthy
     end
 
-    it 'accepts empty header field' do
-      rparse('name:;').should be_truthy
+    describe 'header field' do
+      def rparse(str)
+        @parser.parse(str, root: :header_field)
+      end
+
+      it 'accepts normal header field' do
+        rparse('name: Populus Sion;').should be_truthy
+      end
+
+      it 'accepts empty header field' do
+        rparse('name:;').should be_truthy
+      end
+
+      it 'accepts accentuated characters' do
+        rparse('name:Adorábo;').should be_truthy
+      end
     end
   end
 
@@ -125,6 +141,10 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
 
     it 'two subsequent comments are ok' do
       rparse("%a\n%b").should be_truthy
+    end
+
+    it 'comment immediately after note' do
+      rparse("(a)%comment").should be_truthy
     end
   end
 end
