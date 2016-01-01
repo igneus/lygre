@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/chrisbratlien/rb-music-theory.git
-  revision: f5aab74ecc666600f317dd074214c3e6ff220c57
+  remote: git://github.com/igneus/rb-music-theory.git
+  revision: dd75ca5a629b65a00103cd59397b1e30fa67c0a8
   specs:
     rb-music-theory (0.1.1)
 
