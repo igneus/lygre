@@ -2,6 +2,15 @@
 # traverses them recursively, attempts to process each discovered
 # gabc file by grely, reports issues.
 
+# Good for such purposes are e.g.
+#
+# https://github.com/jperon/gabc
+# - more than 1000 transcribed chants of all genres, but the gabc
+#   syntax isn't always perfect
+#
+# https://github.com/jakubjelinek/Editio-Sti-Wolfgangi
+# - uses all the fancy new features
+
 require 'rspec/core'
 require_relative '../spec/spec_helper'
 
