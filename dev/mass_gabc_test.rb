@@ -10,20 +10,23 @@ $terminal_width = `tput cols`.to_i
 def line_part_with_pointer(str, pointer_index)
   context = 15
 
+  rspec_indent = 10
+  width_available = $terminal_width - rspec_indent
+
   # cut left
-  if str.size > $terminal_width
+  if str.size > width_available
     left_cut = pointer_index - context
     str = str[left_cut .. -1]
     pointer_index -= left_cut
   end
 
   # cut right
-  if str.size > $terminal_width
+  if str.size > width_available
     str = str[0 .. context * 2]
   end
 
   str + "\n" +
-    (" " * pointer_index) + "^"
+    "^".rjust(pointer_index)
 end
 
   def parser_failure_msg(parser, input)
