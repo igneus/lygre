@@ -143,7 +143,7 @@ grammar Gabc
   end
 
   rule notes
-    ( clef / guide / alteration / (note choral_sign? brace?) / space / custos / linebreak / divisio )+
+    ( clef / guide / alteration / (note choral_sign? brace?) / space / custos / linebreak / divisio / macro )+
   end
 
   rule note
@@ -216,5 +216,9 @@ grammar Gabc
 
   rule brace
     "[o" "c"? "b" "a"? ":" [^\]]+ "]"
+  end
+
+  rule macro
+    "[" [nge] "m" [0-9] "]"
   end
 end
