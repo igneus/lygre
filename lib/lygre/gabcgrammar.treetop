@@ -93,13 +93,13 @@ grammar Gabc
   end
 
   rule regular_word_character
-    [a-zA-Z0-9] / [\.,:;?!*] /
+    [a-zA-Z0-9] / [\.,:;?!*\'/+] /
       [\u003f-\u007e] / # gabc-safe basic latin characters
       [\u0080-\u00ff] # latin 1 - supplement
   end
 
   rule special_word_character
-    "<sp>" ( "R/" / "V/" / "A/" / ("'"? "ae") ) "</sp>"
+    "<sp>" regular_word_character+ "</sp>"
   end
 
   # this rule doesn't handle tag mismatch.
