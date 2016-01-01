@@ -215,6 +215,6 @@ grammar Gabc
   end
 
   rule brace
-    "[o" "c"? "b" "a"? ":" [01] ";" [0-9]+ ("mm" / "cm") "]"
+    "[o" "c"? "b" "a"? ":" [^\]]+ "]"
   end
 end
