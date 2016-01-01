@@ -68,6 +68,10 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     it 'accepts characters with accents' do
       rparse('áéíóúý').should be_truthy
     end
+
+    it 'accepts numbers' do
+      rparse('12').should be_truthy
+    end
   end
 
   describe 'regular_word_character rule' do

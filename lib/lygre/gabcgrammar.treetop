@@ -81,15 +81,19 @@ grammar Gabc
   end
 
   rule lyrics_syllable
-    ( regular_word_character / special_word_character / formatted_characters )+
+    word_character+
       ( any_whitespace
-        ( regular_word_character / special_word_character / formatted_characters )+
+        word_character+
         )*
       any_whitespace?
   end
 
+  rule word_character
+    regular_word_character / special_word_character / formatted_characters
+  end
+
   rule regular_word_character
-    [a-zA-Z] / [\.,:;?!*] /
+    [a-zA-Z0-9] / [\.,:;?!*] /
       [\u003f-\u007e] / # gabc-safe basic latin characters
       [\u0080-\u00ff] # latin 1 - supplement
   end
