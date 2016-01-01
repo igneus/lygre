@@ -55,7 +55,8 @@ grammar Gabc
     any_whitespace?
     clef?
     any_whitespace?
-    ( music_word any_whitespace )*
+    ( ( comment any_whitespace? ) /
+      ( music_word any_whitespace comment? any_whitespace? ) )*
     music_word?
     <BodyNode>
   end

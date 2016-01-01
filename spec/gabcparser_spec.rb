@@ -89,4 +89,30 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       rparse('(a,b)').should be_truthy
     end
   end
+
+  describe 'comments in body' do
+    def rparse(str)
+      @parser.parse(str, root: :body)
+    end
+
+    it 'comment alone is ok' do
+      rparse('% hi').should be_truthy
+    end
+
+    it 'comment with trailing whitespace is ok' do
+      rparse('% hi ').should be_truthy
+    end
+
+    it 'comment after note is ok' do
+      rparse('(h) % hi').should be_truthy
+    end
+
+    it 'commented note is ok' do
+      rparse('%(h)').should be_truthy
+    end
+
+    it 'two subsequent comments are ok' do
+      rparse("%a\n%b").should be_truthy
+    end
+  end
 end
