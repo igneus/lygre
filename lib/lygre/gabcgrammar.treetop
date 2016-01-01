@@ -108,7 +108,7 @@ grammar Gabc
   end
 
   rule formatting_tag
-    "b" / "i" / "sc"
+    "b" / "i" / "sc" / "v"
   end
 
   rule music
