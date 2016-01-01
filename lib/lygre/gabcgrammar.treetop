@@ -93,7 +93,7 @@ grammar Gabc
   end
 
   rule regular_word_character
-    [a-zA-Z0-9] / [\.,:;?!*\'/+] /
+    [a-zA-Z0-9] / [\.,:;?!*\'/+-] /
       [\u003f-\u007e] / # gabc-safe basic latin characters
       [\u0080-\u00ff] # latin 1 - supplement
   end
@@ -107,7 +107,7 @@ grammar Gabc
   # such an issue may be safely ignored.
   rule formatted_characters
     "<" formatting_tag ">"
-    ( regular_word_character / special_word_character / inline_whitespace )+
+    ( regular_word_character / special_word_character / inline_whitespace / formatted_characters )+
     "</" formatting_tag ">"
   end
 
