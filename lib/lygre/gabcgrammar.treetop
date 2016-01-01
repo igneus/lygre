@@ -95,7 +95,9 @@ grammar Gabc
   rule regular_word_character
     [a-zA-Z0-9] / [\.,:;?!*\'/+-] /
       [\u003f-\u007e] / # gabc-safe basic latin characters
-      [\u0080-\u00ff] # latin 1 - supplement
+      [\u0080-\u00ff] / # latin 1 - supplement
+      [\u0100-\u017f] / # latin extended-A
+      [\u0180-\u024f] # latin extended-B
   end
 
   rule special_word_character
