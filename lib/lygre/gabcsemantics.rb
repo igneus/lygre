@@ -113,7 +113,7 @@ module Gabc
           end
         elsif ele.is_a? DivisioNode then
           arr << GabcDivisio.new do |d|
-            d.type = ele.text_value.gsub(/\w+/, '') # remove eventual line-breaks etc.
+            d.type = ele.text_value
           end
         else
           collect_notes ele, arr
