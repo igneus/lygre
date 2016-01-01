@@ -98,7 +98,9 @@ grammar Gabc
       [\u003f-\u007e] / # gabc-safe basic latin characters
       [\u0080-\u00ff] / # latin 1 - supplement
       [\u0100-\u017f] / # latin extended-A
-      [\u0180-\u024f] # latin extended-B
+      [\u0180-\u024f] / # latin extended-B
+      [\u2000-\u206f] / # general punctuation, contains daggers
+      [\u2100-\u214f] # letter-like symbols, contains V/ and R/
   end
 
   rule special_word_character
