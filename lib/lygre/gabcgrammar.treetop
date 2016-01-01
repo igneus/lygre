@@ -94,7 +94,7 @@ grammar Gabc
   end
 
   rule word_character
-    regular_word_character / special_word_character / formatted_characters / text_above_lines
+    regular_word_character / guillemets / special_word_character / formatted_characters / text_above_lines
   end
 
   rule regular_word_character
@@ -108,7 +108,7 @@ grammar Gabc
   end
 
   rule special_word_character
-    "<sp>" regular_word_character+ "</sp>"
+    "<sp>" (regular_word_character / parentheses)+ "</sp>"
   end
 
   # this rule doesn't handle tag mismatch.
@@ -116,7 +116,7 @@ grammar Gabc
   # such an issue may be safely ignored.
   rule formatted_characters
     "<" formatting_tag ">"
-    ( regular_word_character / special_word_character / inline_whitespace / formatted_characters )+
+    ( regular_word_character / special_word_character / inline_whitespace / formatted_characters / parentheses )+
     "</" formatting_tag ">"
   end
 
@@ -128,6 +128,14 @@ grammar Gabc
     "<alt>"
     ( regular_word_character / inline_whitespace )+
     "</alt>"
+  end
+
+  rule parentheses
+    [\(\)]
+  end
+
+  rule guillemets
+    "<<" / ">>"
   end
 
   rule music
