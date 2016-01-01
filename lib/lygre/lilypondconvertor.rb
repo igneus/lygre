@@ -18,7 +18,8 @@ class LilypondConvertor
           ':' => '\bar "|"',
           ';' => '\bar "|"',
           '::' => '\bar "||"',
-          ',' => '\bar "\'"'
+          ',' => '\bar "\'"',
+          '`' => '\breathe \bar ""'
          }
 
   def initialize(settings={})
