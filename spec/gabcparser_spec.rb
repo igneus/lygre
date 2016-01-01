@@ -79,4 +79,14 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       @parser.parse(' ', root: :regular_word_character).should be nil
     end
   end
+
+  describe 'music' do
+    def rparse(str)
+      @parser.parse(str, root: :music)
+    end
+
+    it 'copes with divisions between notes' do
+      rparse('(a,b)').should be_truthy
+    end
+  end
 end

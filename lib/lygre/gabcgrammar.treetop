@@ -116,11 +116,11 @@ grammar Gabc
   end
 
   rule music
-    "(" ( guide / notes / divisio )? ")"
+    "(" ( guide / notes )? ")"
   end
 
   rule notes
-    ( alteration / (note choral_sign? brace?) / space / custos / linebreak )+
+    ( alteration / (note choral_sign? brace?) / space / custos / linebreak / divisio )+
   end
 
   rule note
