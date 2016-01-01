@@ -1,4 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/lygre.svg)](http://badge.fury.io/rb/lygre)
+[![Build Status](https://travis-ci.org/igneus/lygre.svg)](https://travis-ci.org/igneus/lygre)
 
 # lygre
 
