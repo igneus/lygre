@@ -38,7 +38,7 @@ grammar Gabc
   end
 
   rule field_value
-    [^;]+
+    [^;]*
   end
 
   rule comment

@@ -7,7 +7,7 @@ describe GabcParser do
   before :each do
     # beginning of the Populus Sion example
     @src = "name: Populus Sion;\n%%\n
-(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;) 
+(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;)
 ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     @parser = GabcParser.new
   end
@@ -18,21 +18,39 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     end
   end
 
+  describe 'header field' do
+    def rparse(str)
+      @parser.parse(str, root: :header_field)
+    end
+
+    it 'accepts normal header field' do
+      rparse('name: Populus Sion;').should be_truthy
+    end
+
+    it 'accepts empty header field' do
+      rparse('name:;').should be_truthy
+    end
+  end
+
   describe 'lyrics_syllable rule' do
+    def rparse(str)
+      @parser.parse(str, root: :lyrics_syllable)
+    end
+
     it 'does not accept space' do
-      @parser.parse(' ', root: :lyrics_syllable).should be nil
+      rparse(' ').should be nil
     end
 
     it 'does not accept string beginning with space' do
-      @parser.parse(' aa', root: :lyrics_syllable).should be nil
+      rparse(' aa').should be nil
     end
 
     it 'accepts ascii characters' do
-      @parser.parse('aa', root: :lyrics_syllable).should be_truthy
+      rparse('aa').should be_truthy
     end
 
     it 'accepts characters with accents' do
-      @parser.parse('áéíóúý', root: :lyrics_syllable).should be_truthy
+      rparse('áéíóúý').should be_truthy
     end
   end
 
