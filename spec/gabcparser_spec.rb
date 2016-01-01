@@ -37,8 +37,24 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       @parser.parse(str, root: :lyrics_syllable)
     end
 
-    it 'does not accept space' do
+    it 'does not accept space alone' do
       rparse(' ').should be nil
+    end
+
+    it 'may end with space' do
+      rparse('hi ').should be_truthy
+    end
+
+    it 'may contain space' do
+      rparse('hi :').should be_truthy
+    end
+
+    it 'may contain several spaces' do
+      rparse('hi   :').should be_truthy
+    end
+
+    it 'may contain several space-separated chunks' do
+      rparse('hi hey :').should be_truthy
     end
 
     it 'does not accept string beginning with space' do

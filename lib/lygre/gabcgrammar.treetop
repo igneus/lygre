@@ -82,6 +82,10 @@ grammar Gabc
 
   rule lyrics_syllable
     ( regular_word_character / special_word_character / formatted_characters )+
+      ( any_whitespace
+        ( regular_word_character / special_word_character / formatted_characters )+
+        )*
+      any_whitespace?
   end
 
   rule regular_word_character
@@ -95,7 +99,7 @@ grammar Gabc
   end
 
   # this rule doesn't handle tag mismatch.
-  # However, for the purposes of gabc->lilypond convertor
+  # However, for purposes of gabc->lilypond convertor
   # such an issue may be safely ignored.
   rule formatted_characters
     "<" formatting_tag ">"
