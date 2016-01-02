@@ -27,9 +27,9 @@ EOF
     'http://github.com/igneus/lygre'
   s.licenses    = ['LGPL-3.0', 'MIT']
 
-  s.add_runtime_dependency 'treetop', '~> 1.4'
+  s.add_runtime_dependency 'treetop', '~> 1.6'
   s.add_runtime_dependency 'polyglot', '~> 0.3'
   s.add_runtime_dependency 'rb-music-theory', '~> 0.1'
 
-  s.add_development_dependency "rspec", '~> 2.14'
+  s.add_development_dependency "rspec", '~> 3.4'
 end
