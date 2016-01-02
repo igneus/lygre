@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = 'lygre'
-  s.version     = '0.0.1'
-  s.date        = '2014-07-20'
+  s.version     = '0.0.2'
+  s.date        = '2016-01-02'
   s.summary     = "converts music formats gabc -> lilypond"
 
   s.description = <<-EOF
@@ -21,7 +21,7 @@ EOF
 
   s.authors     = ["Jakub Pavlík"]
   s.email       = 'jkb.pavlik@gmail.com'
-  s.files       = Dir['bin/*.rb'] + Dir['lib/*.rb'] + Dir['lib/lygre/*.rb'] + Dir['spec/*.rb']
+  s.files       = Dir['bin/*.rb'] + Dir['lib/**/*.rb'] + Dir['lib/**/*.treetop'] + Dir['spec/**/*.rb']
   s.executables = ['grely.rb']
   s.homepage    =
     'http://github.com/igneus/lygre'
