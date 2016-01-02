@@ -172,7 +172,15 @@ grammar Gabc
   end
 
   rule rhythmic_sign
-    "." / "'" / ( "_" "0"? )
+    "." / ("'" above_below?) / ("_" episema_modifiers?)
+  end
+
+  rule above_below
+    [01]
+  end
+
+  rule episema_modifiers
+    [0-5] ..3
   end
 
   rule accent
