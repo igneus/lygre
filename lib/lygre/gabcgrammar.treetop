@@ -135,7 +135,7 @@ grammar Gabc
   end
 
   rule music
-    "(" notes? ")"
+    "(" notes? neumes? ")"
   end
 
   rule notes
@@ -216,5 +216,9 @@ grammar Gabc
 
   rule macro
     "[" [nge] "m" [0-9] "]"
+  end
+
+  rule neumes
+    "|" [^\)]*
   end
 end
