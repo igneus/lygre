@@ -33,7 +33,7 @@ grammar Gabc
     ":"
     inline_whitespace?
     field_value
-    ";"
+    ";" ..2
     <HeaderFieldNode>
   end
 
@@ -42,7 +42,10 @@ grammar Gabc
   end
 
   rule field_value
-    [^;]*
+    (
+     [^;] /
+     (";" !(inline_whitespace? comment? "\n"))
+     )*
   end
 
   rule comment

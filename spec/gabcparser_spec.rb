@@ -31,19 +31,27 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
 
     describe 'header field' do
       def rparse(str)
-        @parser.parse(str, root: :header_field)
+        @parser.parse(str, root: :header)
       end
 
       it 'accepts normal header field' do
-        rparse('name: Populus Sion;').should be_truthy
+        rparse("name: Populus Sion;\n").should be_truthy
       end
 
       it 'accepts empty header field' do
-        rparse('name:;').should be_truthy
+        rparse("name:;\n").should be_truthy
       end
 
       it 'accepts accentuated characters' do
-        rparse('name:Adorábo;').should be_truthy
+        rparse("name:Adorábo;\n").should be_truthy
+      end
+
+      it 'accepts value with semicolons' do
+        rparse("name: 1; 2; 3;\n").should be_truthy
+      end
+
+      it 'accepts multi-line value' do
+        rparse("name: 1\n2;;\n").should be_truthy
       end
     end
   end
