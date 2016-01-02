@@ -168,7 +168,7 @@ grammar Gabc
   end
 
   rule shape_modifiers
-    ( [owqWR] / "v"+ / "V" / "s"+ / ([r] "0"? ![1-5]) )? [~<>]?
+    ( [oOVwWqR] / "v"+ / "s"+ / ([r] "0"? ![1-5]) )? [~<>]?
   end
 
   rule rhythmic_sign
