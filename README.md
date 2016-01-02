@@ -9,9 +9,16 @@ and
 [Gregorio](http://home.gna.org/gregorio/gregoriotex/)
 input format.
 
-## Project status
+Right now only conversion from gabc to LilyPond is possible,
+provided by script `grely.rb`.
 
-the *grely* script is somehow usable, but don't expect it to work perfectly
+## Usage
+
+`grely.rb FILE.gabc` produces `FILE.ly` with contents of `FILE.gabc`
+converted to LilyPond.
+
+The LilyPond output is simple untimed modern notation,
+each chang note converted to a quarter note.
 
 ## Installation and usage
 
