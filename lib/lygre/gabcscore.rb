@@ -15,6 +15,8 @@ class Immutable
 
     freeze
   end
+
+  attr_accessor :text_value
 end
 
 # clean and easy to use music data produced by

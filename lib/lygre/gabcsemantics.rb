@@ -100,16 +100,19 @@ module Gabc
         if ele.is_a? NoteNode then
           arr << GabcNote.new do |n|
             n.pitch = ele.note_pitch.text_value.downcase.to_sym
+            n.text_value = ele.text_value
           end
         elsif ele.is_a? DivisioNode then
           arr << GabcDivisio.new do |d|
             d.type = ele.text_value
+            d.text_value = ele.text_value
           end
         elsif ele.is_a? ClefNode then
           arr << GabcClef.new do |c|
             c.pitch = ele.clef_symbol.text_value.to_sym
             c.bemol = ele.bemol.text_value == 'b'
             c.line = ele.line_number.text_value.to_i
+            c.text_value = ele.text_value
           end
         else
           collect_notes ele, arr
