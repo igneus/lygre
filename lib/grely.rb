@@ -6,4 +6,5 @@ gabcsemantics
 gabcpitchreader
 gabcparser
 lilypondconvertor
+musictheory
 }.each {|f| require_relative File.join('lygre', f)}

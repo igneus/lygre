@@ -29,7 +29,6 @@ EOF
 
   s.add_runtime_dependency 'treetop', '~> 1.6'
   s.add_runtime_dependency 'polyglot', '~> 0.3'
-  s.add_runtime_dependency 'rb-music-theory', '~> 0.1'
 
   s.add_development_dependency "rspec", '~> 3.4'
 end
