@@ -15,16 +15,7 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
-require 'polyglot'
-require 'treetop'
-
 require_relative 'matchers'
-
-
-$: << '../lib'
-require 'grely'
-
-Treetop.load File.expand_path('../lib/lygre/gabcgrammar', File.dirname(__FILE__))
 
 def load_example(fname)
   File.read(
@@ -34,3 +25,6 @@ def load_example(fname)
                             )
            )
 end
+
+# load the tested code
+require_relative '../lib/grely'
