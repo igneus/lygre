@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = 'lygre'
-  s.version     = '0.0.2'
-  s.date        = '2016-01-02'
+  s.version     = '0.0.3'
+  s.date        = '2016-12-15'
   s.summary     = "converts music formats gabc -> lilypond"
 
   s.description = <<-EOF
@@ -13,10 +13,6 @@ lygre gem currently provides tool *grely* converting Gregorio's
 input format (gabc) to simple LilyPond input.
 
 In future another tool for the other direction of conversion may be added.
-
-As rb-music-theory is not at RubyGems, either install it before
-attempting to 'gem install lygre', or get lygre's source from github
-and install the dependencies by 'bundle install'.
 EOF
 
   s.authors     = ["Jakub Pavlík"]
