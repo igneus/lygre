@@ -1,0 +1,7 @@
+# I hate the Ruby style guide exception-related rules
+
+Style/RaiseArgs:
+  Enabled: false
+
+Style/RedundantException:
+  Enabled: false
