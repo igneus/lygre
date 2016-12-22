@@ -3,19 +3,16 @@
 require_relative 'spec_helper'
 
 def gabc2score(str)
-  return GabcParser.new.parse(str).create_score
+  GabcParser.new.parse(str).create_score
 end
 
 describe LilypondConvertor do
-
   before :each do
     @c = LilypondConvertor.new(version: false)
   end
 
   describe '#convert_min' do
-
     describe 'basics' do
-
       it 'converts empty gabc to empty lilypond score' do
         @c.convert_min(gabc2score("%%\n\n")).should eq '\score { }'
       end
@@ -44,11 +41,9 @@ describe LilypondConvertor do
         @c.convert_min(gabc2score("%%\n(c4) (jh)")).should \
           eq '\score { \absolute { c\'\'( a\') } \addlyrics { } }'
       end
-
     end
 
     describe 'clefs and their positions' do
-
       it 'handles c4' do
         @c.convert_min(gabc2score("%%\n(c4) (h) (d)")).should \
           eq "\\score { \\absolute { a' d' } \\addlyrics { } }"
@@ -95,7 +90,6 @@ describe LilypondConvertor do
     end
 
     describe 'barlines' do
-
       it 'translates : to \bar "|"' do
         @c.convert_min(gabc2score("%%\n(c4) (j) (:)")).should \
           eq "\\score { \\absolute { c'' \\bar \"|\" } \\addlyrics { } }"
@@ -118,7 +112,6 @@ describe LilypondConvertor do
     end
 
     describe 'handles special cases of lyrics: ' do
-
       it 'quotes syllable beginning with asterisk' do
         @c.convert_min(gabc2score("%%\n(c4) *la(j)")).should \
           eq "\\score { \\absolute { c'' } \\addlyrics { \"*la\" } }"
@@ -126,7 +119,7 @@ describe LilypondConvertor do
 
       it 'handles lyrics under a divisio' do
         @c.convert_min(gabc2score("%%\n(c4) Ps.(::)")).should \
-          eq "\\score { \\absolute { \\bar \"||\" } \\addlyrics { \\set stanza = \\markup{Ps.} } }"
+          eq '\\score { \\absolute { \\bar "||" } \\addlyrics { \\set stanza = \\markup{Ps.} } }'
       end
 
       it 'handles italic in plain lyrics' do
@@ -136,12 +129,11 @@ describe LilypondConvertor do
 
       it 'handles italic in lyrics under a divisio' do
         @c.convert_min(gabc2score("%%\n(c4) <i>Ps.</i>(::)")).should \
-          eq "\\score { \\absolute { \\bar \"||\" } \\addlyrics { \\set stanza = \\markup{\\italic{Ps.}} } }"
+          eq '\\score { \\absolute { \\bar "||" } \\addlyrics { \\set stanza = \\markup{\\italic{Ps.}} } }'
       end
     end
 
     describe 'optional features' do
-
       describe 'cadenza' do
         before :each do
           @convertor = LilypondConvertor.new(version: false, cadenza: true)
@@ -168,8 +160,8 @@ describe LilypondConvertor do
 
       it 'lily version' do
         LilypondConvertor.new(version: true) \
-          .convert_min(gabc2score("%%\n(c4) (j)\n")).should \
-          eq '\version "2.16.0" \score { \absolute { c\'\' } \addlyrics { } }'
+                         .convert_min(gabc2score("%%\n(c4) (j)\n")).should \
+                           eq '\version "2.16.0" \score { \absolute { c\'\' } \addlyrics { } }'
       end
     end
   end

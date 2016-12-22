@@ -9,23 +9,20 @@ require_relative 'gabcscore'
 # monkey-patch SyntaxNode
 # to add a useful traversal method
 class Treetop::Runtime::SyntaxNode
-
   def each_element
     return if elements.nil?
-    elements.each {|e| yield e }
+    elements.each { |e| yield e }
   end
 end
 
 module Gabc
-
   SyntaxNode = Treetop::Runtime::SyntaxNode
 
   # root node
   class ScoreNode < SyntaxNode
-
     # creates and returns a GabcScore from the syntax tree
     def create_score
-      return GabcScore.new do |s|
+      GabcScore.new do |s|
         s.header = header.to_hash
         s.music = body.create_music
       end
@@ -33,19 +30,18 @@ module Gabc
   end
 
   module HeaderNode
-
     def to_hash
       r = {}
-      
+
       each_element do |lvl1|
         lvl1.each_element do |field|
-          if field.is_a? HeaderFieldNode then
+          if field.is_a? HeaderFieldNode
             r[field.field_id.text_value] = field.field_value.text_value
           end
         end
       end
 
-      return r
+      r
     end
   end
 
@@ -53,31 +49,26 @@ module Gabc
   end
 
   class BodyNode < SyntaxNode
-
     def create_music
       GabcMusic.new do |m|
         words = []
         each_element do |ele|
-          if ele.is_a? WordNode then
+          if ele.is_a? WordNode
             words << ele.create_word
           else
             ele.each_element do |elel|
               elel.each_element do |elelel|
-                if elelel.is_a? WordNode then
-                  words << elelel.create_word
-                end
+                words << elelel.create_word if elelel.is_a? WordNode
               end
             end
           end
         end
         m.words = words
-
       end
     end
   end
 
   module WordNode
-
     def create_word
       w = []
 
@@ -89,25 +80,25 @@ module Gabc
         end
       end
 
-      return GabcWord.new w
+      GabcWord.new w
     end
 
     private
 
     # recursively collects notes from a node
-    def collect_notes(node, arr=[])
+    def collect_notes(node, arr = [])
       node.each_element do |ele|
-        if ele.is_a? NoteNode then
+        if ele.is_a? NoteNode
           arr << GabcNote.new do |n|
             n.pitch = ele.note_pitch.text_value.downcase.to_sym
             n.text_value = ele.text_value
           end
-        elsif ele.is_a? DivisioNode then
+        elsif ele.is_a? DivisioNode
           arr << GabcDivisio.new do |d|
             d.type = ele.text_value
             d.text_value = ele.text_value
           end
-        elsif ele.is_a? ClefNode then
+        elsif ele.is_a? ClefNode
           arr << GabcClef.new do |c|
             c.pitch = ele.clef_symbol.text_value.to_sym
             c.bemol = ele.bemol.text_value == 'b'
@@ -119,7 +110,7 @@ module Gabc
         end
       end
 
-      return arr
+      arr
     end
   end
 

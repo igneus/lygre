@@ -25,24 +25,22 @@ def line_part_with_pointer(str, pointer_index)
   # cut left
   if str.size > width_available
     left_cut = pointer_index - context
-    str = str[left_cut .. -1]
+    str = str[left_cut..-1]
     pointer_index -= left_cut
   end
 
   # cut right
-  if str.size > width_available
-    str = str[0 .. context * 2]
-  end
+  str = str[0..context * 2] if str.size > width_available
 
   str + "\n" +
-    "^".rjust(pointer_index)
+    '^'.rjust(pointer_index)
 end
 
-  def parser_failure_msg(parser, input)
-    error_line = input.split("\n")[parser.failure_line-1]
+def parser_failure_msg(parser, input)
+  error_line = input.split("\n")[parser.failure_line - 1]
 
-    "'#{parser.failure_reason}' on line #{parser.failure_line} column #{parser.failure_column}:\n" +
-      line_part_with_pointer(error_line, parser.failure_column)
+  "'#{parser.failure_reason}' on line #{parser.failure_line} column #{parser.failure_column}:\n" +
+    line_part_with_pointer(error_line, parser.failure_column)
 end
 
 RSpec.describe 'examples' do
@@ -52,14 +50,12 @@ RSpec.describe 'examples' do
 
   ARGV.each do |dir|
     Dir["#{dir}/**/*.gabc"].each do |path|
-      it "#{path}" do
+      it path.to_s do
         input = File.read path
         parsed = @parser.parse(input)
 
         # ensure parsing went well
-        if parsed.nil?
-          raise parser_failure_msg(@parser, input)
-        end
+        raise parser_failure_msg(@parser, input) if parsed.nil?
 
         score = parsed.create_score
 

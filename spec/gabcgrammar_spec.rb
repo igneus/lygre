@@ -5,21 +5,18 @@ require_relative 'spec_helper'
 # the GabcParser is described through the file format
 # it should be able to parse
 describe 'gabc' do
-
   describe 'valid gabc file must contain a header delimiter' do
-
     it 'file with just the header delimiter is valid' do
       "%%\n".should compile
     end
 
     it 'file without header delimiter is invalid' do
-      src = ""
+      src = ''
       src.should_not compile
     end
   end
 
   describe 'header contains' do
-        
     describe 'whitespace' do
       it '- any number of empty lines' do
         src = "\n\n\n\n%%\n"
@@ -65,11 +62,9 @@ describe 'gabc' do
         src.should compile
       end
     end
-
   end
 
   describe 'body contains' do
-
     describe 'whitespace' do
       it '- any number of empty lines' do
         "%%\n\n\n\n\n".should compile
@@ -113,7 +108,7 @@ describe 'gabc' do
 
       describe 'one-note neumes without and with shape modifiers' do
         it { "%%\n (g)".should compile }
-        it { "%%\n (G) (G~) (G>)".should compile } 
+        it { "%%\n (G) (G~) (G>)".should compile }
         it { "%%\n (g~) (g<) (g>)".should compile }
         it { "%%\n (go) (go~) (go<)".should compile }
         it { "%%\n (gw) (gv) (gs) (gs<)".should compile }
@@ -161,11 +156,11 @@ describe 'gabc' do
         it { "%%\n (h/h)".should compile }
         it { "%%\n (h//h)".should compile }
         it { "%%\n (h h)".should compile }
-        it 'unbreakable space' do 
-          "%%\n (h! h)".should compile 
+        it 'unbreakable space' do
+          "%%\n (h! h)".should compile
         end
         it 'prevent note linking' do
-          "%%\n (gh!i)".should compile 
+          "%%\n (gh!i)".should compile
         end
       end
 
@@ -217,6 +212,5 @@ describe 'gabc' do
         it { "%%\n <sc>can. i</sc>()".should compile }
       end
     end
-
   end
 end

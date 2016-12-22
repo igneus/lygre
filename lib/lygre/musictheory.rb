@@ -1,10 +1,10 @@
 # Simple diatonic music theory necessary for parsing of Gregorian chant scores
 module MusicTheory
-  PITCHES = [:c, :d, :e, :f, :g, :a, :b]
-  VALUES = [0, 2, 4, 5, 7, 9, 11]
+  PITCHES = [:c, :d, :e, :f, :g, :a, :b].freeze
+  VALUES = [0, 2, 4, 5, 7, 9, 11].freeze
 
   class Note
-    def initialize(pitch=:c, octave=1)
+    def initialize(pitch = :c, octave = 1)
       @pitch = pitch
       @pitch_numeric = PITCHES.index @pitch
       @octave = octave

@@ -19,11 +19,11 @@ require_relative 'matchers'
 
 def load_example(fname)
   File.read(
-            File.expand_path(
-                             File.join('examples', fname), 
-                             File.dirname(__FILE__)
-                            )
-           )
+    File.expand_path(
+      File.join('examples', fname),
+      File.dirname(__FILE__)
+    )
+  )
 end
 
 # load the tested code

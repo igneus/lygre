@@ -3,10 +3,10 @@
 # responsible for converting the 'visual pitch' information
 # contained in gabc to absolute musical pitch
 class GabcPitchReader
-  CLEFS = {:c => "c''", :f => "f'"}
+  CLEFS = { c: "c''", f: "f'" }.freeze
   CLEF_POSITIONS = 1..4
 
-  def initialize(clef=:c, clef_position=4)
+  def initialize(clef = :c, clef_position = 4)
     unless CLEFS.include? clef
       raise ArgumentError.new "#{clef} is not a valid clef"
     end
@@ -25,7 +25,7 @@ class GabcPitchReader
   # gets a gabc visual pitch, returns a RbMusicTheory::Note
   def pitch(visual_note)
     hnote = visual_note.to_s.ord - 'a'.ord # steps from a - the lowest writable gabc note
-    return @base.diatonic_steps(hnote)
+    @base.diatonic_steps(hnote)
   end
 
   private
@@ -40,7 +40,6 @@ end
 # an interface to create RBMusicTheory::Notes using lilypond notation
 class NoteFactory
   class << self
-
     # notesym is a String - absolute pitch in the lilypond format.
     # (currently alterations are not supported, as they are not necessary
     # for our dealing with Gregorian chant.)
@@ -55,15 +54,15 @@ class NoteFactory
 
       sign = 0
       octave = 0
-      if octaves then
+      if octaves
         sign = (octaves[0] == ',' ? -1 : 1)
         octave += (octaves.size * sign)
       end
-      return MusicTheory::Note.new note.to_sym, octave
+      MusicTheory::Note.new note.to_sym, octave
     end
 
-    alias :create_note :create
-    alias :[] :create
+    alias create_note create
+    alias [] create
 
     # returns a lilypond absolute pitch for the given RbMusicTheory::Note
     #
@@ -71,7 +70,7 @@ class NoteFactory
     # #create translates lilypond pitch to Note and #lily_abs_pitch
     # does the reverse translation, so maybe just the class should be renamed
     def lily_abs_pitch(note)
-      octave_signs = (note.octave >= 0 ? "'" : ",") * note.octave.abs
+      octave_signs = (note.octave >= 0 ? "'" : ',') * note.octave.abs
       note.pitch.to_s + octave_signs
     end
   end

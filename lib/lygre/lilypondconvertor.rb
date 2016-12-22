@@ -1,31 +1,30 @@
 # encoding: UTF-8
 
 class LilypondConvertor
-
   # true - print if given; false - ignore; 'always' - print even if empty
   DEFAULT_SETTINGS = {
-                      version: true,
-                      notes: true,
-                      lyrics: true,
-                      header: true,
-                      cadenza: false
-                     }
+    version: true,
+    notes: true,
+    lyrics: true,
+    header: true,
+    cadenza: false
+  }.freeze
 
   DEFAULT_CLEF = GabcClef.new(pitch: :c, line: 4, bemol: false)
 
   # maps gabc divisiones to lilypond bars
   BARS = {
-          ':' => '\bar "|"',
-          ';' => '\bar "|"',
-          '::' => '\bar "||"',
-          ',' => '\bar "\'"',
-          '`' => '\breathe \bar ""'
-         }
+    ':' => '\bar "|"',
+    ';' => '\bar "|"',
+    '::' => '\bar "||"',
+    ',' => '\bar "\'"',
+    '`' => '\breathe \bar ""'
+  }.freeze
 
-  def initialize(settings={})
+  def initialize(settings = {})
     @settings = DEFAULT_SETTINGS.dup.update(settings)
 
-    # todo: make it possible to freely choose absolute c _pitch_
+    # TODO: make it possible to freely choose absolute c _pitch_
     @c_pitch = NoteFactory["c''"]
 
     @lily_scale = [:c, :d, :e, :f, :g, :a, :b]
@@ -44,10 +43,10 @@ class LilypondConvertor
     clef = DEFAULT_CLEF
     @gabc_reader = GabcPitchReader.new clef.pitch, clef.line
 
-    score.music.words.each_with_index do |word,i|
+    score.music.words.each_with_index do |word, _i|
       current = word_notes(word, clef)
       if @settings[:cadenza] &&
-         ! (notes.empty? || current.empty? ||
+         !(notes.empty? || current.empty? ||
             notes.last.include?('\bar') || current.include?('\bar'))
         notes << '\bar ""'
       end
@@ -60,35 +59,33 @@ class LilypondConvertor
     r += "\\version \"2.16.0\"\n\n" if @settings[:version]
     r += "\\score {\n"
 
-    if @settings[:notes] and
-        (notes.size > 0 or @settings[:notes] == 'always') then
+    if @settings[:notes] &&
+       (!notes.empty? || (@settings[:notes] == 'always'))
       r += "  \\absolute {\n"
 
-      if @settings[:cadenza] then
-        r += "    \\cadenzaOn\n"
-      end
+      r += "    \\cadenzaOn\n" if @settings[:cadenza]
 
-      r += "    #{notes.join(" ")}\n" +
-        "  }\n"
+      r += "    #{notes.join(' ')}\n" \
+           "  }\n"
     end
 
-    if @settings[:lyrics] and
-        (lyrics.size > 0 or @settings[:lyrics] == 'always') then
-      r += "  \\addlyrics {\n" +
-        "    #{lyrics.join(" ")}\n" +
-        "  }\n"
+    if @settings[:lyrics] &&
+       (!lyrics.empty? || (@settings[:lyrics] == 'always'))
+      r += "  \\addlyrics {\n" \
+           "    #{lyrics.join(' ')}\n" \
+           "  }\n"
     end
 
-    if @settings[:header] and
-        (header.size > 0 or @settings[:header] == 'always') then
-      r += "  \\header {\n" +
-        "#{header}\n" +
-        "  }\n"
+    if @settings[:header] &&
+       (!header.empty? || (@settings[:header] == 'always'))
+      r += "  \\header {\n" \
+           "#{header}\n" \
+           "  }\n"
     end
 
     r += "}\n"
 
-    return r
+    r
   end
 
   # returns the output of #convert 'minimized', with whitespace reduced
@@ -101,31 +98,31 @@ class LilypondConvertor
   def melisma(notes)
     notes[0] = (notes[0].to_s + '(').to_sym
     notes[-1] = (notes[-1].to_s + ')').to_sym
-    return notes
+    notes
   end
 
-  def word_notes(word, clef)
+  def word_notes(word, _clef)
     r = []
     word.each_syllable do |syl|
       notes = syl.notes
 
-      if notes.empty? then
+      if notes.empty?
         r << 's'
       else
         sylnotes = []
         notes.each do |n|
-          if n.is_a? GabcNote then
+          if n.is_a? GabcNote
             pitch = @gabc_reader.pitch(n.pitch)
             sylnotes << NoteFactory.lily_abs_pitch(pitch)
-          elsif n.is_a? GabcDivisio then
+          elsif n.is_a? GabcDivisio
             divisio = n.type
-            unless BARS.has_key? divisio
+            unless BARS.key? divisio
               raise RuntimeError.new "Unhandled bar type '#{n.type}'"
             end
 
             sylnotes << BARS[divisio].dup
 
-          elsif n.is_a? GabcClef then
+          elsif n.is_a? GabcClef
             @gabc_reader = GabcPitchReader.new n.pitch, n.line
 
           else
@@ -133,38 +130,32 @@ class LilypondConvertor
           end
         end
 
-        if notes.size >= 2 then
-          sylnotes = melisma sylnotes
-        end
+        sylnotes = melisma sylnotes if notes.size >= 2
         r += sylnotes
       end
     end
-    return r.join ' '
+    r.join ' '
   end
 
   def word_lyrics(word)
     word.collect do |syll|
       l = syll.lyrics
 
-      if syll.lyrics.start_with? '*' then
-        l = '"' + syll.lyrics + '"'
+      l = '"' + syll.lyrics + '"' if syll.lyrics.start_with? '*'
+
+      if syll.lyrics.include? '<'
+        l = syll.lyrics.gsub(/<i>([^<]+)<\/i>/) do |_m|
+          '\italic{' + Regexp.last_match(1) + '}'
+        end
+        l = '\markup{' + l + '}'
       end
 
-      if syll.lyrics.include? '<' then
-        l = syll.lyrics.gsub(/<i>([^<]+)<\/i>/) do |m|
-          '\italic{' + $1 + '}'
-        end
-        l = '\markup{'+l+'}'
-      end
+      if (syll.notes.size == 1) &&
+         syll.notes.first.is_a?(GabcDivisio) &&
+         !syll.lyrics.empty?
 
-      if syll.notes.size == 1 and
-          syll.notes.first.is_a? GabcDivisio and
-          syll.lyrics.size > 0 then
-
-        unless l.start_with? '\markup'
-          l = '\markup{'+l+'}'
-        end
-        l = '\set stanza = '+l
+        l = '\markup{' + l + '}' unless l.start_with? '\markup'
+        l = '\set stanza = ' + l
       end
 
       l

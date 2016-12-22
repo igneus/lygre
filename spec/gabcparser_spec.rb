@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe GabcParser do
-
   before :each do
     # beginning of the Populus Sion example
     @src = "name: Populus Sion;\n%%\n
@@ -152,7 +151,7 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     end
 
     it 'comment immediately after note' do
-      rparse("(a)%comment").should be_truthy
+      rparse('(a)%comment').should be_truthy
     end
   end
 end

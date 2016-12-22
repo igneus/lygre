@@ -5,11 +5,10 @@ require_relative 'spec_helper'
 # GabcScore is the parsing result returned by GabcParser
 
 describe GabcScore do
-
   before :each do
     # beginning of the Populus Sion example
     @src = "name: Populus Sion;\n%%\n
-(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;) 
+(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;)
 ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     @parser = GabcParser.new
   end
@@ -56,11 +55,10 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
 end
 
 describe GabcMusic do
-
   before :each do
     # beginning of the Populus Sion example
     @src = "name: Populus Sion;\n%%\n
-(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;) 
+(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;)
 ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     @parser = GabcParser.new
     @music = @parser.parse(@src).create_score.music
@@ -78,7 +76,7 @@ describe GabcWord do
   before :each do
     # beginning of the Populus Sion example
     @src = "name: Populus Sion;\n%%\n
-(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;) 
+(c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;)
 ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     @parser = GabcParser.new
     @music = @parser.parse(@src).create_score.music

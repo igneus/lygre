@@ -1,14 +1,14 @@
 # encoding: UTF-8
 
-# todo: wrap in a module
+# TODO: wrap in a module
 
 # initialized by arguments or by assignment in a block;
 # frozen thereafter
 class Immutable
-  def initialize(args={})
-    args.each_pair do |k,v|
+  def initialize(args = {})
+    args.each_pair do |k, v|
       writer = (k.to_s + '=').to_sym
-      self.send(writer, v)
+      send(writer, v)
     end
 
     yield self if block_given?
@@ -23,7 +23,6 @@ end
 # Gabc::ScoreNode#create_score
 # from the syntax tree created by GabcParser
 class GabcScore < Immutable
-
   # header fields as Hash
   attr_accessor :header
 
@@ -32,13 +31,11 @@ class GabcScore < Immutable
 end
 
 class GabcMusic < Immutable
-
   # Array of GabcWords
   attr_accessor :words
 end
 
 class GabcClef < Immutable
-
   # 'c' or 'f'
   attr_accessor :pitch
 
@@ -55,17 +52,15 @@ end
 
 # collection of syllables
 class GabcWord < Array
-
   def initialize(*args)
     super(*args)
     freeze
   end
 
-  alias_method :each_syllable, :each
+  alias each_syllable each
 end
 
 class GabcSyllable < Immutable
-
   # String; may be empty
   attr_accessor :lyrics
 
@@ -74,7 +69,6 @@ class GabcSyllable < Immutable
 end
 
 class GabcNote < Immutable
-
   attr_accessor :pitch
   attr_accessor :shape
   attr_accessor :initio_debilis
@@ -83,6 +77,5 @@ class GabcNote < Immutable
 end
 
 class GabcDivisio < Immutable
-
   attr_accessor :type
 end
