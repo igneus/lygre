@@ -4,7 +4,7 @@
 # instantiated by the GabcParser
 
 require 'treetop'
-require_relative 'gabcscore'
+require_relative 'score'
 
 # monkey-patch SyntaxNode
 # to add a useful traversal method

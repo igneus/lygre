@@ -1,10 +1,10 @@
 # libraries needed for the gregorio -> lilypond conversion
 
 %w(
-  gabcscore
-  gabcsemantics
-  gabcpitchreader
-  gabcparser
-  lilypondconvertor
-  musictheory
+  gabc/score
+  gabc/semantics
+  gabc/pitch_reader
+  gabc/parser
+  lilypond_convertor
+  music_theory
 ).each { |f| require_relative File.join('lygre', f) }
