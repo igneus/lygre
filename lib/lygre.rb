@@ -1,7 +1,7 @@
 # libraries needed for the gregorio -> lilypond conversion
 
-%w{ 
-gabcscore 
+%w{
+gabcscore
 gabcsemantics
 gabcpitchreader
 gabcparser

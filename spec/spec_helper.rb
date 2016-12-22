@@ -27,4 +27,4 @@ def load_example(fname)
 end
 
 # load the tested code
-require_relative '../lib/grely'
+require_relative '../lib/lygre'
