@@ -61,7 +61,7 @@ class LilypondConvertor
 
     if @settings[:notes] &&
        (!notes.empty? || (@settings[:notes] == 'always'))
-      r += "  \\absolute {\n"
+      r += "  \\transpose c c' {\n"
 
       r += "    \\cadenzaOn\n" if @settings[:cadenza]
 
@@ -112,7 +112,7 @@ class LilypondConvertor
         sylnotes = []
         notes.each do |n|
           if n.is_a? GabcNote
-            pitch = @gabc_reader.pitch(n.pitch)
+            pitch = @gabc_reader.pitch(n.pitch).diatonic_steps(-7)
             sylnotes << NoteFactory.lily_abs_pitch(pitch)
           elsif n.is_a? GabcDivisio
             divisio = n.type
