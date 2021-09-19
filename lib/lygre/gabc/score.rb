@@ -33,6 +33,20 @@ end
 class GabcMusic < Immutable
   # Array of GabcWords
   attr_accessor :words
+
+  def lyric_syllables
+    words.collect do |word|
+      next if word.clef_only? || word.divisio_only?
+
+      word.each_syllable.collect {|s| s.lyrics }
+    end.compact
+  end
+
+  def lyrics_readable
+    lyric_syllables
+      .collect {|word| word.join('') }
+      .join(' ')
+  end
 end
 
 class GabcClef < Immutable
@@ -58,6 +72,31 @@ class GabcWord < Array
   end
 
   alias each_syllable each
+
+  def clef_only?
+    notes = each_syllable.first.notes
+
+    single_syllable_no_lyrics? &&
+      notes.size == 1 &&
+      notes.first.is_a?(GabcClef)
+  end
+
+  def divisio_only?
+    notes = each_syllable.first.notes
+
+    single_syllable_no_lyrics? &&
+      notes.size == 1 &&
+      notes.first.is_a?(GabcDivisio)
+  end
+
+  private
+
+  def single_syllable_no_lyrics?
+    syllables = each_syllable.to_a
+
+    syllables.size == 1 &&
+      syllables[0].lyrics.empty?
+  end
 end
 
 class GabcSyllable < Immutable

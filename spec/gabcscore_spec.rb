@@ -70,6 +70,22 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     it { should_not be_empty }
     it { should contain_a GabcWord }
   end
+
+  describe '#lyric_syllables' do
+    it 'returns an Array<Array<String>>' do
+      @music
+        .lyric_syllables
+        .should eq [%w(Pó pu lus), %w(Si on,), %w(*), %w(ec ce), %w(Dó mi nus), %w(vé ni et.)]
+    end
+  end
+
+  describe '#lyrics_readable' do
+    it 'returns a String' do
+      @music
+        .lyrics_readable
+        .should eq 'Pópulus Sion, * ecce Dóminus véniet.'
+    end
+  end
 end
 
 describe GabcWord do
