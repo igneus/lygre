@@ -172,7 +172,7 @@ grammar Gabc
   end
 
   rule rhythmic_sign
-    "." / ("'" above_below?) / ("_" episema_modifiers?)
+    ("." above_below?) / ("'" above_below?) / ("_" episema_modifiers?)
   end
 
   rule above_below

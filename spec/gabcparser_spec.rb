@@ -123,6 +123,10 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     it 'custos-division' do
       rparse('(z0::)').should be_truthy
     end
+
+    it 'punctum mora position modifier' do
+      rparse('(a.0 a.1)').should be_truthy
+    end
   end
 
   describe 'comments in body' do
