@@ -116,28 +116,17 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       @parser.parse(str, root: :music)
     end
 
-    it 'copes with divisions between notes' do
-      rparse('(a,b)').should be_truthy
-    end
-
-    it 'custos-division-clef' do
-      rparse('(z0::c3)').should be_truthy
-    end
-
-    it 'division-clef' do
-      rparse('(::c3)').should be_truthy
-    end
-
-    it 'custos-division' do
-      rparse('(z0::)').should be_truthy
-    end
-
-    it 'punctum mora position modifier' do
-      rparse('(a.0 a.1)').should be_truthy
-    end
-
-    it 'oriscus orientation' do
-      rparse('(ho0 ho1)').should be_truthy
+    [
+      ['(a,b)', 'divisio between notes in a music syllable'],
+      ['(z0::c3)', 'custos-divisio-clef'],
+      ['(::c3)', 'divisio-clef'],
+      ['(z0::)', 'custos-division'],
+      ['(a.0 a.1)', 'punctum mora position modifier'],
+      ['(ho0 ho1)', 'oriscus orientation modifier'],
+    ].each do |gabc, label|
+      it label do
+        rparse(gabc).should be_truthy
+      end
     end
   end
 
