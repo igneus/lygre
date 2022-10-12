@@ -121,8 +121,16 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       ['(z0::c3)', 'custos-divisio-clef'],
       ['(::c3)', 'divisio-clef'],
       ['(z0::)', 'custos-division'],
+
       ['(a.0 a.1)', 'punctum mora position modifier'],
       ['(ho0 ho1)', 'oriscus orientation modifier'],
+
+      # spaces
+      ['(h/!h)', 'small separation within neume'],
+      ['(h/h)', 'small separation'],
+      ['(h//h)', 'medium separation'],
+      ['(h h)', 'large separation'],
+      ['(h!h)', 'zero-width space'],
     ].each do |gabc, label|
       it label do
         rparse(gabc).should be_truthy
