@@ -126,6 +126,7 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       ['(ho0 ho1)', 'oriscus orientation modifier'],
 
       # spaces
+      ['(h/0h)', 'half space within neume'],
       ['(h/!h)', 'small separation within neume'],
       ['(h/h)', 'small separation'],
       ['(h//h)', 'medium separation'],
