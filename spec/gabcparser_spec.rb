@@ -137,6 +137,8 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       ['(h_0)'],
       ['(h_5)'],
       ['(h_023)'],
+      ['(h_[uh:l])'],
+      ['(h_[oh:ol])'],
     ].each do |gabc, label|
       it(label || gabc) do
         rparse(gabc).should be_truthy

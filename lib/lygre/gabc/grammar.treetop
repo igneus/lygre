@@ -186,6 +186,7 @@ grammar Gabc
 
   rule episema_modifiers
     [0-5] ..3
+    ( "[" [uo] "h:" [^\]]* "]" )?
   end
 
   rule accent
