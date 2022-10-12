@@ -132,8 +132,13 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       ['(h//h)', 'medium separation'],
       ['(h h)', 'large separation'],
       ['(h!h)', 'zero-width space'],
+
+      # horizontal episema modifiers
+      ['(h_0)'],
+      ['(h_5)'],
+      ['(h_023)'],
     ].each do |gabc, label|
-      it label do
+      it(label || gabc) do
         rparse(gabc).should be_truthy
       end
     end
