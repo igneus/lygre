@@ -135,6 +135,10 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     it 'punctum mora position modifier' do
       rparse('(a.0 a.1)').should be_truthy
     end
+
+    it 'oriscus orientation' do
+      rparse('(ho0 ho1)').should be_truthy
+    end
   end
 
   describe 'comments in body' do

@@ -173,7 +173,7 @@ grammar Gabc
   end
 
   rule shape_modifiers
-    ( [oOVwWqR] / "v"+ / "s"+ / ([r] "0"? ![1-5]) )? [~<>]?
+    ( ([oO] [01]?) / [VwWqR] / "v"+ / "s"+ / ([r] "0"? ![1-5]) )? [~<>]?
   end
 
   rule rhythmic_sign
