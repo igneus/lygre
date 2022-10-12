@@ -141,6 +141,28 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       ['(h_023)'],
       ['(h_[uh:l])'],
       ['(h_[oh:ol])'],
+
+      # divisiones / bars
+      #['(‘)', 'virgula'],
+      #['(‘0)', 'virgula on the ledger line above the staff'],
+      #['(^)', 'divisio “minimis” (eighth bar)'],
+      #['(^0)', 'once again divisio “minimis”'],
+      ['(,)', 'divisio minima (quarter bar)'],
+      #['(,0)', 'divisio minima on the ledger line above the staff'],
+      ['(;)',  'divisio minor (half bar)'],
+      ['(:)', 'divisio maior (full bar)'],
+      #['(:?)', 'dotted divisio maior'],
+      ['(::)', 'divisio finalis'],
+      ['(;1)', 'Dominican bars:'],
+      ['(;2)'],
+      ['(;3)'],
+      ['(;4)'],
+      ['(;5)'],
+      ['(;6)'],
+      #['(;7)'],
+      #['(;8)'],
+      ["(:')", 'divisio (maior in this case) with vertical episema'],
+      ["(:')", 'divisio (maior in this case) with bar brace'],
     ].each do |gabc, label|
       it(label || gabc) do
         rparse(gabc).should be_truthy
