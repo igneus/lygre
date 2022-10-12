@@ -133,6 +133,8 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       ['(h h)', 'large separation'],
       ['(h!h)', 'zero-width space'],
 
+      ['(h@i)', 'neume fusion'],
+
       # horizontal episema modifiers
       ['(h_0)'],
       ['(h_5)'],

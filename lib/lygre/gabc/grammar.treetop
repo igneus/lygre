@@ -195,7 +195,8 @@ grammar Gabc
 
   rule space
     ( "!"? ( ("/" [/0]?) / " " ) ) /
-      "!"
+      "!" /
+      "@"
   end
 
   rule linebreak
