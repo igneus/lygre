@@ -4,7 +4,7 @@
 
 # converts gabc to lilypond
 
-require 'grely'
+require 'lygre'
 
 def grely(rf)
   input = rf.read
