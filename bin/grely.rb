@@ -27,7 +27,7 @@ end
 
 ok = true
 if ARGV.empty?
-  grely STDIN
+  ok = grely STDIN
 else
   ARGV.each do |f|
     File.open(f) do |rf|
@@ -36,4 +36,4 @@ else
   end
 end
 
-exit ok ? 0 : 1
+exit 1 unless ok
