@@ -24,6 +24,13 @@ each chang note converted to a quarter note.
 
     $ gem install lygre
 
+## Running tests
+
+Get the sources.
+
+`$ bundle install` to install dependencies
+`$ bundle exec rspec` to run tests
+
 ## Feedback welcome
 
 If you have any wishes concerning grely's functionality;
