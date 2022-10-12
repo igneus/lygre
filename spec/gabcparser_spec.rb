@@ -17,6 +17,14 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
     end
   end
 
+  describe 'whitespace' do
+    it 'accepts DOS-style newlines' do
+      src = "name: Score with DOS newlines;\r\n%%\r\n(c3) a(h)men(h)\r\n"
+      node = @parser.parse(src)
+      node.should be_kind_of Gabc::ScoreNode
+    end
+  end
+
   describe 'header' do
     it 'two subsequent header fields' do
       str = "name:Intret in conspectu;\noffice-part:Introitus;\n"

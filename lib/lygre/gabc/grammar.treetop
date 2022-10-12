@@ -10,13 +10,17 @@ grammar Gabc
     <ScoreNode>
   end
 
+  rule newline
+    "\r"? "\n"
+  end
+
   # header ----------------------------
 
   rule header
     ( header_field?
       inline_whitespace?
       comment?
-      "\n" )*
+      newline )*
       <HeaderNode>
   end
 
@@ -25,7 +29,7 @@ grammar Gabc
   end
 
   rule any_whitespace
-    (inline_whitespace / "\n")+
+    (inline_whitespace / newline)+
   end
 
   rule header_field
@@ -44,7 +48,7 @@ grammar Gabc
   rule field_value
     (
      [^;] /
-     (";" !(inline_whitespace? comment? "\n"))
+     (";" !(inline_whitespace? comment? newline))
      )*
   end
 
@@ -53,7 +57,8 @@ grammar Gabc
   end
 
   rule header_delimiter
-    "%%\n"
+    "%%"
+    newline
   end
 
   # body ------------------------------
@@ -103,7 +108,7 @@ grammar Gabc
   end
 
   rule regular_word_character
-    [^\(\n\t ] # anything but: opening parentheses, newline, tab, space
+    [^\(\r\n\t ] # anything but: opening parentheses, newline, tab, space
   end
 
   rule special_word_character
