@@ -1,3 +1,6 @@
+* document usage of the gabc parser - there doesn't seem to be any other Ruby gabc parser available
+  - support loading the parser subtree on its own, without utilities for conversion to other formats
+
 # grely
 
 * update rspec matchers
