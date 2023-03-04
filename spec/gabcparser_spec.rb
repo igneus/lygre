@@ -2,25 +2,24 @@
 
 require 'spec_helper'
 
-describe GabcParser do
-  before :each do
+shared_examples 'any gabc parser' do
+  let(:src) do
     # beginning of the Populus Sion example
-    @src = "name: Populus Sion;\n%%\n
+    "name: Populus Sion;\n%%\n
 (c3) Pó(eh/hi)pu(h)lus(h) Si(hi)on,(hgh.) *(;)
 ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
-    @parser = GabcParser.new
   end
 
   describe '#parse' do
     it 'returns ScoreNode' do
-      @parser.parse(@src).should be_kind_of Gabc::ScoreNode
+      subject.parse(src).should be_kind_of Gabc::ScoreNode
     end
   end
 
   describe 'whitespace' do
     it 'accepts DOS-style newlines' do
       src = "name: Score with DOS newlines;\r\n%%\r\n(c3) a(h)men(h)\r\n"
-      node = @parser.parse(src)
+      node = subject.parse(src)
       node.should be_kind_of Gabc::ScoreNode
     end
   end
@@ -28,17 +27,17 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
   describe 'header' do
     it 'two subsequent header fields' do
       str = "name:Intret in conspectu;\noffice-part:Introitus;\n"
-      @parser.parse(str, root: :header).should be_truthy
+      subject.parse(str, root: :header).should be_truthy
     end
 
     it 'comment+header field' do
       str = "%comment\nname:Intret in conspectu;\n"
-      @parser.parse(str, root: :header).should be_truthy
+      subject.parse(str, root: :header).should be_truthy
     end
 
     describe 'header field' do
       def rparse(str)
-        @parser.parse(str, root: :header)
+        subject.parse(str, root: :header)
       end
 
       it 'accepts normal header field' do
@@ -65,7 +64,7 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
 
   describe 'lyrics_syllable rule' do
     def rparse(str)
-      @parser.parse(str, root: :lyrics_syllable)
+      subject.parse(str, root: :lyrics_syllable)
     end
 
     it 'does not accept space alone' do
@@ -107,13 +106,13 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
 
   describe 'regular_word_character rule' do
     it 'does not accept space' do
-      @parser.parse(' ', root: :regular_word_character).should be nil
+      subject.parse(' ', root: :regular_word_character).should be nil
     end
   end
 
   describe 'music' do
     def rparse(str)
-      @parser.parse(str, root: :music)
+      subject.parse(str, root: :music)
     end
 
     [
@@ -166,7 +165,6 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
 
       # note element order
       ['(hv_)'],
-      ['(h_v)', nil, true],
     ].each do |gabc, label, pend|
       it(label || gabc) do
         pending if pend
@@ -177,7 +175,7 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
 
   describe 'comments in body' do
     def rparse(str)
-      @parser.parse(str, root: :body)
+      subject.parse(str, root: :body)
     end
 
     it 'comment alone is ok' do
@@ -202,6 +200,34 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
 
     it 'comment immediately after note' do
       rparse('(a)%comment').should be_truthy
+    end
+  end
+end
+
+describe GabcParser do
+  it_behaves_like 'any gabc parser'
+end
+
+describe SimpleGabcParser do
+  let(:notsimple_parser) { GabcParser.new }
+
+  it_behaves_like 'any gabc parser'
+
+  describe 'differences to the not-simple parser' do
+    [
+      ['(h_v)'], # GabcParser is sensitive to note element order
+      ['(áéí)'], # invalid gabc music, but SimpleGabcParser does not care
+    ].each do |gabc, label|
+      describe(label || gabc) do
+        it 'is accepted by the simple parser' do
+          subject.parse(gabc, root: :music)
+            .should be_truthy
+        end
+        it 'is refused by the not-simple parser' do
+          notsimple_parser.parse(gabc, root: :music)
+            .should be nil
+        end
+      end
     end
   end
 end

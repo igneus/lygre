@@ -1,0 +1,19 @@
+# Treetop grammar for gabc (input format of Gregorio).
+# Compiled by Treetop emits SimpleGabcParser class.
+# This parser doesn't know anything about music encoding,
+# handles music simply as some string in parentheses.
+
+grammar SimpleGabc
+  include Gabc
+
+  # copied from Gabc (the first rule of any grammar is considered
+  # its root rule)
+  rule root
+    score
+  end
+
+  # overridden
+  rule music
+    "(" [^)]* ")"
+  end
+end

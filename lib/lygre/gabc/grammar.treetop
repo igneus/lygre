@@ -3,6 +3,10 @@
 
 grammar Gabc
 
+  rule root
+    score
+  end
+
   rule score
     header
     header_delimiter
