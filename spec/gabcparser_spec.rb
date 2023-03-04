@@ -163,8 +163,13 @@ ec(hihi)ce(e.) Dó(e.f!gwh/hi)mi(h)nus(h) vé(hi)ni(ig/ih)et.(h.) (::)"
       ['(;8)'],
       ["(:')", 'divisio (maior in this case) with vertical episema'],
       ["(:_)", 'divisio (maior in this case) with bar brace'],
-    ].each do |gabc, label|
+
+      # note element order
+      ['(hv_)'],
+      ['(h_v)', nil, true],
+    ].each do |gabc, label, pend|
       it(label || gabc) do
+        pending if pend
         rparse(gabc).should be_truthy
       end
     end
