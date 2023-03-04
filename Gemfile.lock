@@ -64,7 +64,7 @@ GEM
     shellany (0.0.1)
     slop (3.6.0)
     thor (0.19.1)
-    treetop (1.6.3)
+    treetop (1.6.12)
       polyglot (~> 0.3)
     unicode-display_width (1.1.2)
 
@@ -77,3 +77,6 @@ DEPENDENCIES
   rspec
   rubocop
   treetop
+
+BUNDLED WITH
+   2.1.4
