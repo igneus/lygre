@@ -7,4 +7,5 @@
   gabc/parser
   lilypond_convertor
   music_theory
+  parse_error_formatter
 ).each { |f| require_relative File.join('lygre', f) }
